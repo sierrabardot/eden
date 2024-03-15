@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "ESNext",
+        "moduleResolution": "Node",
+        "rootDir": "src",
+        "sourceMap": true,
+        "strict": true,
+        "allowJs": true,
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "skipLibCheck": true,
+        "removeComments": true,
+        "noEmitOnError": true,
+        "esModuleInterop": true,
+        "noImplicitReturns": true,
+        "lib": ["DOM", "DOM.Iterable", "ESNext"],
+        "jsx": "react"
+    },
+    "include": ["src/**/*.ts", "src/**/*.tsx"],
+    "exclude": ["node_modules"]
+}
