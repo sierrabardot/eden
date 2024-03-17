@@ -4,6 +4,7 @@ import sendRequest from './send-request';
 const BASE_URL = '/api/users';
 
 export async function createUser(userData: UserData) {
+    console.log('inside users-api: ', userData);
     return sendRequest(BASE_URL, 'POST', userData);
 }
 

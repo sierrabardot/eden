@@ -21,10 +21,15 @@ export default async function sendRequest(
         // Prefacing with 'Bearer' is recommended in the HTTP specification
         options.headers.Authorization = `Bearer ${token}`;
     }
+    console.log(
+        `inside send request. url: ${url}, token: ${token}, options: ${options}`
+    );
     const res = await fetch(url, options);
+    console.log(res);
 
     // res.ok will be false if the status code is set to 4xx in the controller action
     if (res.ok) {
+        console.log('inside send request - res ok');
         const contentType = res.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
             return res.json();

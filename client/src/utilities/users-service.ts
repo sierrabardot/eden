@@ -2,6 +2,7 @@ import { createUser, login as loginAPI } from './users-api';
 import { LoginData, UserData, User } from '../types/userTypes';
 
 export async function signUp(userData: UserData): Promise<User | null> {
+    console.log('inside users-service: ', userData);
     const token: string = await createUser(userData);
     localStorage.setItem('token', token);
     return getUser();

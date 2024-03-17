@@ -9,6 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 const express = require('express');
 const logger = require('morgan');
 const checkToken = require('./middleware/checkToken');
+const usersApi = require('./routes/api/users');
 
 // Connect to the database
 require('./config/database');
@@ -21,6 +22,8 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', '..', 'client', 'dist')));
 
 app.use(checkToken);
+
+app.use('/api/users', usersApi);
 
 app.get('/*', function (req, res) {
     res.sendFile(
