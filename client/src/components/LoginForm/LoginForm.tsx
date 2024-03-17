@@ -1,7 +1,8 @@
 import React, { FormEvent, ChangeEvent, useState } from 'react';
-import { Props } from '../../types/userTypes';
+import { Props, User } from '../../types/userTypes';
+import { login } from '../../utilities/users-service';
 
-export function LoginForm({ userStore }: Props) {
+export function LoginForm({ setUser }: Props) {
     const [form, setForm] = useState({
         email: '',
         password: '',
@@ -20,7 +21,12 @@ export function LoginForm({ userStore }: Props) {
         event.preventDefault();
         try {
             const loginData = form;
-            await userStore.login(loginData);
+            const user: User | null = await login(loginData);
+            if (user !== null) {
+                setUser(user);
+            } else {
+                setError('Sign up failed. Please try again');
+            }
         } catch (error) {
             console.error(error);
             setError('Incorrect username or password.');

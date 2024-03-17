@@ -10,7 +10,6 @@ module.exports = {
 
 async function create(req, res) {
     const userData = req.body;
-    console.log(`inside controller. user data: ${userData}`);
     try {
         const user = await User.create(userData);
         const token = createJWT(user);
@@ -41,8 +40,6 @@ async function login(req, res) {
 }
 
 function checkToken(req, res) {
-    // req.user will always be there for you when a token is sent
-    console.log('req.user', req.user);
     res.json(req.user.exp);
 }
 

@@ -1,14 +1,14 @@
-import React, { Suspense } from 'react';
+import React, { FunctionComponent, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import UserStore from '../../store/UserStore';
-import { observer } from 'mobx-react';
 import { User } from '../../types/userTypes';
 import { AuthPage } from '../AuthPage/AuthPage';
+import { getUser } from '../../utilities/users-service';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-const App: React.FunctionComponent = observer(() => {
-    const userStore = new UserStore();
-    const user: User | null = userStore.user;
+const App: FunctionComponent = () => {
+    const [user, setUser] = useState<User | null>(() => {
+        return getUser();
+    });
 
     return (
         <>
@@ -16,9 +16,14 @@ const App: React.FunctionComponent = observer(() => {
                 <Suspense fallback={<div>Loading...</div>}>
                     <header>
                         <h1>Eden</h1>
+                        {user ? (
+                            <div>Welcome, {user.name}</div>
+                        ) : (
+                            <div>No user</div>
+                        )}
                     </header>
                     <main className='App'>
-                        {user !== null ? (
+                        {user ? (
                             <Routes>
                                 <Route
                                     path='/'
@@ -28,8 +33,14 @@ const App: React.FunctionComponent = observer(() => {
                             </Routes>
                         ) : (
                             <Routes>
-                                <Route path='/login' element={<AuthPage />} />
-                                <Route path='/signup' element={<AuthPage />} />
+                                <Route
+                                    path='/login'
+                                    element={<AuthPage setUser={setUser} />}
+                                />
+                                <Route
+                                    path='/signup'
+                                    element={<AuthPage setUser={setUser} />}
+                                />
                                 <Route
                                     path='*'
                                     element={<Navigate to='/login' />}
@@ -41,6 +52,6 @@ const App: React.FunctionComponent = observer(() => {
             </ErrorBoundary>
         </>
     );
-});
+};
 
 export default App;

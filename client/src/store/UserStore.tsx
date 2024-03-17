@@ -1,4 +1,3 @@
-import { observable, makeObservable, action } from 'mobx';
 import { User, UserData, LoginData } from '../types/userTypes';
 import * as usersService from '../utilities/users-service';
 

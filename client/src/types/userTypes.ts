@@ -1,4 +1,4 @@
-import UserStore from '../store/UserStore';
+import { SetStateAction } from 'react';
 
 export type UserData = {
     name: string;
@@ -20,5 +20,6 @@ export type User = {
 };
 
 export type Props = {
-    userStore: UserStore;
+    user?: User;
+    setUser: React.Dispatch<SetStateAction<User | null>>;
 };

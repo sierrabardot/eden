@@ -1,7 +1,8 @@
 import React, { FormEvent, ChangeEvent, useState } from 'react';
-import { Props } from '../../types/userTypes';
+import { Props, User } from '../../types/userTypes';
+import { signUp } from '../../utilities/users-service';
 
-export function SignUpForm({ userStore }: Props) {
+export function SignUpForm({ setUser }: Props) {
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -17,6 +18,7 @@ export function SignUpForm({ userStore }: Props) {
             [event.target.name]: event.target.value,
         });
     };
+
     const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const userData = {
@@ -25,7 +27,12 @@ export function SignUpForm({ userStore }: Props) {
             password: form.password,
         };
         try {
-            await userStore.signUp(userData);
+            const user: User | null = await signUp(userData);
+            if (user !== null) {
+                setUser(user);
+            } else {
+                setError('Sign up failed. Please try again');
+            }
         } catch (error: any) {
             setError('An error occurred with the sign up.');
         }
