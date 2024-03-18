@@ -1,8 +1,13 @@
 import { Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AuthPage } from '../AuthPage/AuthPage';
+import { SavedLocations } from '../../components/SavedLocations/SavedLocations'
+import { AddLocationForm } from '../../components/AddLocationForm/AddLocationForm'
+import { HistoryLog } from '../../components/HistoryLog/HistoryLog'
+import { Map } from '../../pages/Map/Map'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
+import { Home } from '../Home/Home';
 import * as usersService from '../../utilities/users-service'
 import './App.css';
 
@@ -27,32 +32,19 @@ function App() {
                     <main className='App'>
                         {user ? (
                             <Routes>
-                                <Route
-                                    path='/'
-                                    element={<Navigate to='/' replace />}
-                                />
-                                <Route path='*' element={<Navigate to='/' />} />
+                                <Route path='/home' element={<Home setUser={setUser} />}>
+                                    <Route path='saved' element={<SavedLocations />} />
+                                    <Route path='add-location' element={<AddLocationForm />} />
+                                    <Route path='history' element={<HistoryLog />} />
+                                </Route>
+                                <Route path='/map' element={<Map />}>
+                                </Route>
+                                <Route path='*' element={<Navigate to='/home' />} />
                             </Routes>
                         ) : (
                             <Routes>
-                                <Route
-                                    path='/login'
-                                    element={
-                                        <AuthPage
-                                            user={user}
-                                            setUser={setUser}
-                                        />
-                                    }
-                                />
-                                <Route
-                                    path='/signup'
-                                    element={
-                                        <AuthPage
-                                            user={user}
-                                            setUser={setUser}
-                                        />
-                                    }
-                                />
+                                <Route path='/login' element={<AuthPage user={user} setUser={setUser} />} />
+                                <Route path='/signup' element={<AuthPage user={user} setUser={setUser} />} />
                                 <Route
                                     path='*'
                                     element={<Navigate to='/login' />}
