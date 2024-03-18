@@ -5,6 +5,7 @@ import { SavedLocations } from '../../components/SavedLocations/SavedLocations'
 import { AddLocationForm } from '../../components/AddLocationForm/AddLocationForm'
 import { HistoryLog } from '../../components/HistoryLog/HistoryLog'
 import { Map } from '../../pages/Map/Map'
+import { Search } from '../../pages/Search/Search'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { Home } from '../Home/Home';
@@ -37,8 +38,8 @@ function App() {
                                     <Route path='add-location' element={<AddLocationForm />} />
                                     <Route path='history' element={<HistoryLog />} />
                                 </Route>
-                                <Route path='/map' element={<Map />}>
-                                </Route>
+                                <Route path='/map' element={<Map />} />
+                                <Route path='/search' element={<Search />} />
                                 <Route path='*' element={<Navigate to='/home' />} />
                             </Routes>
                         ) : (

@@ -4,10 +4,17 @@ import { ActiveComponent } from "../../components/ActiveComponent/ActiveComponen
 
 export function Home({ setUser }) {
     const [activeComponent, setActiveComponent] = useState(null)
+
     return (
-        <>
-            <NavigationPanel setUser={setUser} setActiveComponent={setActiveComponent} activeComponent={activeComponent} />
-            <ActiveComponent activeComponent={activeComponent} />
-        </>
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-7">
+                    <NavigationPanel setUser={setUser} setActiveComponent={setActiveComponent} />
+                </div>
+                <div className="col-md-5">
+                    <ActiveComponent activeComponent={activeComponent} />
+                </div>
+            </div>
+        </div>
     )
 }

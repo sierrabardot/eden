@@ -1,55 +1,41 @@
-import { useState } from "react"
-import { Link } from "react-router-dom"
+import { Link } from 'react-router-dom'
+import navigationLinks from './navLinks.json'
+import { logout } from '../../utilities/users-service'
 
-export function NavigationPanel({ setUser, setActiveComponent, activeComponent }) {
-    function handleOnClick(event) {
-        console.log(event)
-        setActiveComponent()
+export function NavigationPanel({ setUser, setActiveComponent }) {
+    function handleLogOut() {
+        logout();
+        setUser(null);
     }
+    
     return (
-        <div className="container">
-            <div className="row">
-                <div className="col-6">
-                    {links.map((link) => (
-                        <div key={link.path} className="card" onClick={(event) => {handleOnClick(event)}}>
+        <div className="container-fluid text-center border">
+            <div className="row justify-content-start">
+                {navigationLinks.map((link) => (
+                <div className="col-6" key={link.id} >
+                    {link.is_link ? (
+                    <div className="card m-2">
+                        <Link className="card-body text-decoration-none" to={link.path}>
                             <div className="card-title">{link.title}</div>
-                        </div>
+                        </Link>
+                    </div>
+                        ) : (
+                            <div className="card m-2" onClick={() => {setActiveComponent(link.id)}}>
+                                <div className="card-body">
+                                <div className="card-title">{link.title}</div>
+                                </div>
+                            </div>
+                        )}
+                    </div>
                     ))}
+                <div className="col-6">
+                    <div className="card m-2" onClick={() => {handleLogOut()}}>
+                        <div className="card-body">
+                            <div className="card-title">Log Out</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
-
-const links = [
-    {
-        path: '/map/explore',
-        title: 'Explore Map',
-        icon: '',
-    },
-    {
-        path: '/home/saved',
-        title: 'Saved Locations',
-        icon: '',
-    },
-    {
-        path: '/search',
-        title: 'Search',
-        icon: '',
-    },
-    {
-        path: '/home/add-location',
-        title: 'Add Location',
-        icon: '',
-    },
-    {
-        path: '/home/history',
-        title: 'History',
-        icon: '',
-    },
-    {
-        path: '/',
-        title: 'Log Out',
-        icon: '',
-    },
-]

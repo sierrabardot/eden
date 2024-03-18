@@ -25,15 +25,7 @@ export function NavBar({ user, setUser }) {
                     <span className='navbar-toggler-icon'></span>
                 </button>
             </div>
-            {user ? (
-                <div
-                    className='collapse navbar-collapse'
-                    id='navbarNavAltMarkup'>
-                    <div className='btn btn-primary' onClick={handleLogOut}>
-                        Log Out
-                    </div>
-                </div>
-            ) : (
+            {!user && (
                 <div
                     className='collapse navbar-collapse'
                     id='navbarNavAltMarkup'>

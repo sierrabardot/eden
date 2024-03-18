@@ -1,20 +1,20 @@
-import supabase from '../config/supabaseClient';
+import db from '../config/dbClient';
 
 export async function logout() {
-    await supabase.auth.signOut();
+    await db.auth.signOut();
     localStorage.removeItem('token');
 }
 
 export async function getUser() {
     const {
         data: { user },
-    } = await supabase.auth.getUser();
+    } = await db.auth.getUser();
     return user;
 }
 
 export async function login(loginData) {
     try {
-        const { data, error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await db.auth.signInWithPassword({
             email: loginData.email,
             password: loginData.password,
         });
@@ -28,7 +28,7 @@ export async function login(loginData) {
 
 export async function signUp(userData) {
     try {
-        const { data } = await supabase.auth.signUp({
+        const { data } = await db.auth.signUp({
             email: userData.email,
             password: userData.password,
             options: {
