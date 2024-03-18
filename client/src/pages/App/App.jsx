@@ -7,9 +7,15 @@ import * as usersService from '../../utilities/users-service'
 import './App.css';
 
 function App() {
-    const [user, setUser] = useState(() => {
-        usersService.getUser();
-    });
+    const [user, setUser] = useState(null);
+    
+    useEffect(() => {
+        const checkLoggedIn = async () => {
+            const user = await usersService.getUser()
+            setUser(user)
+        }
+        checkLoggedIn()
+    }, [])
 
     return (
         <>

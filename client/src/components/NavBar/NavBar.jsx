@@ -11,7 +11,7 @@ export function NavBar({ user, setUser }) {
     return (
         <nav className='navbar navbar-expand-lg bg-body-tertiary'>
             <div className='container'>
-                <NavLink to='/notes' className='text-decoration-none'>
+                <NavLink to='/' className='text-decoration-none'>
                     <div className='navbar-brand mb-0 h1'>Eden</div>
                 </NavLink>
                 <button

@@ -1,26 +1,8 @@
 import { useState } from 'react';
-// import { signUp } from '../../utilities/users-service';
-import supabase from '../../config/supabaseClient';
+import * as usersService from '../../utilities/users-service';
 
 export function SignUpForm({ setUser }) {
     const [error, setError] = useState(null);
-    async function signUpWithSupabase(userData) {
-        try {
-            const { data } = await supabase.auth.signUp({
-                email: userData.email,
-                password: userData.password,
-                options: {
-                    data: {
-                        username: userData.username,
-                    },
-                },
-            });
-            setUser(data);
-        } catch (error) {
-            setError('An error occurred with the sign up.');
-            console.error('Error', error);
-        }
-    }
 
     const [form, setForm] = useState({
         username: '',
@@ -44,15 +26,10 @@ export function SignUpForm({ setUser }) {
             password: form.password,
         };
         try {
-            const user = await signUpWithSupabase(userData);
-            if (user !== null) {
-                console.log(user);
-                setUser(user);
-            } else {
-                setError('Sign up failed. Please try again');
-            }
+            const user = await usersService.signUp(userData);
+            setUser(user);
         } catch (error) {
-            setError('An error occurred with the sign up.');
+            setError(error.message);
         }
     };
 

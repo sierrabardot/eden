@@ -23,7 +23,6 @@ export function LoginForm({ user, setUser }) {
             const user = await usersService.login(loginData);
             setUser(user)
         } catch (error) {
-            console.error(error);
             setError(error.message);
         }
     };

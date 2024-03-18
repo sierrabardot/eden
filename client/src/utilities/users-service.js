@@ -2,15 +2,14 @@ import supabase from '../config/supabaseClient';
 
 export async function logout() {
     await supabase.auth.signOut();
+    localStorage.removeItem('token');
 }
 
 export async function getUser() {
-    const data = await getSession();
-    const token = data.session.access_token;
-    if (isTokenValid(token)) {
-        console.log(token);
-    }
-    return await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
+    return user;
 }
 
 export async function login(loginData) {
@@ -27,17 +26,20 @@ export async function login(loginData) {
     }
 }
 
-async function getSession() {
-    const { data, error } = await supabase.auth.getSession();
-    console.log(data);
-    return data;
-}
-
-export function isTokenValid(token) {
-    const payload = JSON.parse(atob(token.split('.')[1]));
-    if (payload.exp < Date.now() / 1000) {
-        localStorage.removeItem('token');
-        return false;
+export async function signUp(userData) {
+    try {
+        const { data } = await supabase.auth.signUp({
+            email: userData.email,
+            password: userData.password,
+            options: {
+                data: {
+                    username: userData.username,
+                },
+            },
+        });
+        return data;
+    } catch (error) {
+        console.error(error.message);
+        throw new Error('An error occurred with the sign up.');
     }
-    return true;
 }
