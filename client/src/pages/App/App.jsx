@@ -1,14 +1,14 @@
-import React, { FunctionComponent, Suspense, useState } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AuthPage } from '../AuthPage/AuthPage';
-import { getUser } from '../../utilities/users-service';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
+import * as usersService from '../../utilities/users-service'
 import './App.css';
 
 function App() {
     const [user, setUser] = useState(() => {
-        return getUser();
+        usersService.getUser();
     });
 
     return (

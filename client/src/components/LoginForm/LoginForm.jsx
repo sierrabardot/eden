@@ -1,5 +1,5 @@
 import {  useState } from 'react';
-import supabase from '../../config/supabaseClient';
+import * as usersService from '../../utilities/users-service'
 
 export function LoginForm({ user, setUser }) {
     const [form, setForm] = useState({
@@ -8,21 +8,7 @@ export function LoginForm({ user, setUser }) {
     });
 
     const [error, setError] = useState(null);
-
-    async function loginWithSupabase(loginData) {
-        try {
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: loginData.email,
-                password: loginData.password,
-            });
-            setUser(data.user)
-            console.log(data.user)
-        } catch (error) {
-            setError(error.message);
-            console.error('Error', error);
-        }
-    }
-
+    
     const handleChange = (event) => {
         setForm({
             ...form,
@@ -30,19 +16,15 @@ export function LoginForm({ user, setUser }) {
         });
     };
 
-    const handleSubmit = async (event) => {
+    async function handleSubmit(event) {
         event.preventDefault();
         try {
             const loginData = form;
-            const user = await loginWithSupabase(loginData);
-            if (user !== null) {
-                setUser(user);
-            } else {
-                setError('Sign up failed. Please try again');
-            }
+            const user = await usersService.login(loginData);
+            setUser(user)
         } catch (error) {
             console.error(error);
-            setError('Incorrect username or password.');
+            setError(error.message);
         }
     };
 

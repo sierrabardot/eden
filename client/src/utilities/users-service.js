@@ -1,37 +1,43 @@
-import { createUser, login as loginAPI } from './users-api';
+import supabase from '../config/supabaseClient';
 
-export async function signUp(userData) {
-    const token = await createUser(userData);
-    localStorage.setItem('token', token);
-    return getUser();
+export async function logout() {
+    await supabase.auth.signOut();
+}
+
+export async function getUser() {
+    const data = await getSession();
+    const token = data.session.access_token;
+    if (isTokenValid(token)) {
+        console.log(token);
+    }
+    return await supabase.auth.getUser();
 }
 
 export async function login(loginData) {
-    const token = await loginAPI(loginData);
-    localStorage.setItem('token', token);
-    return getUser();
-}
-
-export function logout() {
-    localStorage.removeItem('token');
-}
-
-export function getToken() {
-    const token = localStorage.getItem('token');
-    if (!token) return null;
-
-    const payload = JSON.parse(atob(token.split('.')[1]));
-
-    // A JWT's exp is expressed in seconds, not milliseconds, so convert
-    if (payload.exp < Date.now() / 1000) {
-        // Token has expired - remove it from localStorage
-        localStorage.removeItem('token');
-        return null;
+    try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+            email: loginData.email,
+            password: loginData.password,
+        });
+        const user = await getUser();
+        return user;
+    } catch (error) {
+        console.error(error.message);
+        throw new Error('Log in failed. Please try again.');
     }
-    return token;
 }
 
-export function getUser() {
-    const token = getToken();
-    return token ? JSON.parse(atob(token.split('.')[1])) : null;
+async function getSession() {
+    const { data, error } = await supabase.auth.getSession();
+    console.log(data);
+    return data;
+}
+
+export function isTokenValid(token) {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (payload.exp < Date.now() / 1000) {
+        localStorage.removeItem('token');
+        return false;
+    }
+    return true;
 }
