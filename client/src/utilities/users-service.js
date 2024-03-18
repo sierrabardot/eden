@@ -1,23 +1,22 @@
 import { createUser, login as loginAPI } from './users-api';
-import { LoginData, UserData, User } from '../types/userTypes';
 
-export async function signUp(userData: UserData): Promise<User | null> {
-    const token: string = await createUser(userData);
+export async function signUp(userData) {
+    const token = await createUser(userData);
     localStorage.setItem('token', token);
     return getUser();
 }
 
-export async function login(loginData: LoginData): Promise<User | null> {
-    const token: any = await loginAPI(loginData);
+export async function login(loginData) {
+    const token = await loginAPI(loginData);
     localStorage.setItem('token', token);
     return getUser();
 }
 
-export function logout(): void {
+export function logout() {
     localStorage.removeItem('token');
 }
 
-export function getToken(): string | null {
+export function getToken() {
     const token = localStorage.getItem('token');
     if (!token) return null;
 
@@ -32,7 +31,7 @@ export function getToken(): string | null {
     return token;
 }
 
-export function getUser(): User | null {
-    const token: string | null = getToken();
+export function getUser() {
+    const token = getToken();
     return token ? JSON.parse(atob(token.split('.')[1])) : null;
 }

@@ -1,27 +1,40 @@
-import React, { FormEvent, ChangeEvent, useState } from 'react';
-import { Props, User } from '../../types/userTypes';
-import { login } from '../../utilities/users-service';
+import {  useState } from 'react';
+import supabase from '../../config/supabaseClient';
 
-export function LoginForm({ setUser }: Props) {
+export function LoginForm({ user, setUser }) {
     const [form, setForm] = useState({
         email: '',
         password: '',
     });
 
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState(null);
 
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    async function loginWithSupabase(loginData) {
+        try {
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: loginData.email,
+                password: loginData.password,
+            });
+            setUser(data.user)
+            console.log(data.user)
+        } catch (error) {
+            setError(error.message);
+            console.error('Error', error);
+        }
+    }
+
+    const handleChange = (event) => {
         setForm({
             ...form,
             [event.target.name]: event.target.value,
         });
     };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         try {
             const loginData = form;
-            const user: User | null = await login(loginData);
+            const user = await loginWithSupabase(loginData);
             if (user !== null) {
                 setUser(user);
             } else {

@@ -2,17 +2,16 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { SignUpForm } from '../../components/SignUpForm/SignUpForm';
 import { LoginForm } from '../../components/LoginForm/LoginForm';
-import { Props } from '../../types/userTypes';
 
-export function AuthPage({ setUser }: Props) {
+export function AuthPage({ setUser, user }) {
     const location = useLocation();
 
     return (
         <div>
             {location.pathname === '/login' ? (
-                <LoginForm setUser={setUser} />
+                <LoginForm setUser={setUser} user={user} />
             ) : (
-                <SignUpForm setUser={setUser} />
+                <SignUpForm setUser={setUser} user={user} />
             )}
         </div>
     );

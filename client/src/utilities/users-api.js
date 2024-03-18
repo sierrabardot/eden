@@ -1,12 +1,11 @@
-import { UserData, LoginData } from '../types/userTypes';
 import sendRequest from './send-request';
 
 const BASE_URL = '/api/users';
 
-export async function createUser(userData: UserData) {
+export async function createUser(userData) {
     return sendRequest(BASE_URL, 'POST', userData);
 }
 
-export async function login(loginData: LoginData): Promise<string | null> {
+export async function login(loginData) {
     return sendRequest(`${BASE_URL}/login`, 'POST', loginData);
 }

@@ -1,45 +1,63 @@
-import React, { FormEvent, ChangeEvent, useState } from 'react';
-import { Props, User } from '../../types/userTypes';
-import { signUp } from '../../utilities/users-service';
+import { useState } from 'react';
+// import { signUp } from '../../utilities/users-service';
+import supabase from '../../config/supabaseClient';
 
-export function SignUpForm({ setUser }: Props) {
+export function SignUpForm({ setUser }) {
+    const [error, setError] = useState(null);
+    async function signUpWithSupabase(userData) {
+        try {
+            const { data } = await supabase.auth.signUp({
+                email: userData.email,
+                password: userData.password,
+                options: {
+                    data: {
+                        username: userData.username,
+                    },
+                },
+            });
+            setUser(data);
+        } catch (error) {
+            setError('An error occurred with the sign up.');
+            console.error('Error', error);
+        }
+    }
+
     const [form, setForm] = useState({
-        name: '',
+        username: '',
         email: '',
         password: '',
         confirmPassword: '',
     });
 
-    const [error, setError] = useState<string | null>(null);
-
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event) => {
         setForm({
             ...form,
             [event.target.name]: event.target.value,
         });
     };
 
-    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
         const userData = {
-            name: form.name,
+            username: form.username,
             email: form.email,
             password: form.password,
         };
         try {
-            const user: User | null = await signUp(userData);
+            const user = await signUpWithSupabase(userData);
             if (user !== null) {
+                console.log(user);
                 setUser(user);
             } else {
                 setError('Sign up failed. Please try again');
             }
-        } catch (error: any) {
+        } catch (error) {
             setError('An error occurred with the sign up.');
         }
     };
 
-    const disable: boolean =
-        !form.name ||
+    const disable =
+        !form.username ||
         !form.email ||
         !form.password ||
         form.password !== form.confirmPassword;
@@ -49,14 +67,14 @@ export function SignUpForm({ setUser }: Props) {
             <div className='form-container'>
                 <form onSubmit={handleSubmit}>
                     <div className='mb-3'>
-                        <label htmlFor='name' className='form-label'>
-                            Name
+                        <label htmlFor='username' className='form-label'>
+                            Username
                         </label>
                         <input
                             className='form-control'
                             type='text'
-                            name='name'
-                            value={form.name}
+                            name='username'
+                            value={form.username}
                             onChange={handleChange}
                             required
                         />

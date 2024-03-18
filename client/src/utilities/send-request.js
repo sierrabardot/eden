@@ -1,13 +1,9 @@
 import { getToken } from './users-service';
 
-export default async function sendRequest(
-    url: string,
-    method: string = 'GET',
-    payload: any = null
-) {
+export default async function sendRequest(url, method = 'GET', payload = null) {
     // Fetch accepts an options object as the 2nd argument
     // used to include a data payload, set headers, etc.
-    const options: Options = { method };
+    const options = { method };
     if (payload) {
         options.headers = { 'Content-Type': 'application/json' };
         options.body = JSON.stringify(payload);
@@ -35,10 +31,4 @@ export default async function sendRequest(
     } else {
         throw new Error('Bad Request');
     }
-}
-
-interface Options {
-    method: string;
-    headers?: Record<string, string>;
-    body?: any;
 }

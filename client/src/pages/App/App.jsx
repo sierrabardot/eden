@@ -1,12 +1,13 @@
 import React, { FunctionComponent, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
-import { User } from '../../types/userTypes';
 import { AuthPage } from '../AuthPage/AuthPage';
 import { getUser } from '../../utilities/users-service';
 import { Routes, Route, Navigate } from 'react-router-dom';
+import { NavBar } from '../../components/NavBar/NavBar';
+import './App.css';
 
-const App: FunctionComponent = () => {
-    const [user, setUser] = useState<User | null>(() => {
+function App() {
+    const [user, setUser] = useState(() => {
         return getUser();
     });
 
@@ -15,12 +16,7 @@ const App: FunctionComponent = () => {
             <ErrorBoundary fallback={<div>Something went wrong!</div>}>
                 <Suspense fallback={<div>Loading...</div>}>
                     <header>
-                        <h1>Eden</h1>
-                        {user ? (
-                            <div>Welcome, {user.name}</div>
-                        ) : (
-                            <div>No user</div>
-                        )}
+                        <NavBar user={user} setUser={setUser} />
                     </header>
                     <main className='App'>
                         {user ? (
@@ -35,11 +31,21 @@ const App: FunctionComponent = () => {
                             <Routes>
                                 <Route
                                     path='/login'
-                                    element={<AuthPage setUser={setUser} />}
+                                    element={
+                                        <AuthPage
+                                            user={user}
+                                            setUser={setUser}
+                                        />
+                                    }
                                 />
                                 <Route
                                     path='/signup'
-                                    element={<AuthPage setUser={setUser} />}
+                                    element={
+                                        <AuthPage
+                                            user={user}
+                                            setUser={setUser}
+                                        />
+                                    }
                                 />
                                 <Route
                                     path='*'
@@ -48,6 +54,7 @@ const App: FunctionComponent = () => {
                             </Routes>
                         )}
                     </main>
+                    <footer></footer>
                 </Suspense>
             </ErrorBoundary>
         </>
