@@ -1,10 +1,7 @@
 import { Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AuthPage } from '../AuthPage/AuthPage';
-import { SavedLocations } from '../../components/SavedLocations/SavedLocations'
-import { AddLocationForm } from '../../components/AddLocationForm/AddLocationForm'
-import { HistoryLog } from '../../components/HistoryLog/HistoryLog'
-import { Map } from '../Map/Map'
+import { MapPage } from '../Map/Map'
 import { Search } from '../Search/Search'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
@@ -22,7 +19,7 @@ function App() {
         }
         checkLoggedIn()
     }, [])
-
+    
     return (
         <>
             <ErrorBoundary fallback={<div>Something went wrong!</div>}>
@@ -33,12 +30,8 @@ function App() {
                     <main className='App'>
                         {user ? (
                             <Routes>
-                                <Route path='/home' element={<Home setUser={setUser} />}>
-                                    <Route path='saved' element={<SavedLocations />} />
-                                    <Route path='add-location' element={<AddLocationForm />} />
-                                    <Route path='history' element={<HistoryLog />} />
-                                </Route>
-                                <Route path='/map' element={<Map />} />
+                                <Route path='/home' element={<Home setUser={setUser} />} />
+                                <Route path='/map' element={<MapPage />} />
                                 <Route path='/search' element={<Search />} />
                                 <Route path='*' element={<Navigate to='/home' />} />
                             </Routes>

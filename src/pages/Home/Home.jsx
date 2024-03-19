@@ -2,14 +2,14 @@ import { useState } from "react"
 import { NavigationPanel } from "../../components/NavigationPanel/NavigationPanel"
 import { ActiveComponent } from "../../components/ActiveComponent/ActiveComponent"
 
-export function Home({ setUser }) {
+export function Home({ setUser, userLocation }) {
     const [activeComponent, setActiveComponent] = useState(null)
 
     return (
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-7">
-                    <NavigationPanel setUser={setUser} setActiveComponent={setActiveComponent} />
+                    <NavigationPanel setUser={setUser} userLocation={userLocation} setActiveComponent={setActiveComponent} />
                 </div>
                 <div className="col-md-5">
                     <ActiveComponent activeComponent={activeComponent} />
