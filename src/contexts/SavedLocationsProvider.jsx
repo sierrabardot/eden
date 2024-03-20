@@ -7,12 +7,13 @@ export const SavedLocationsProvider = ({ children }) => {
     const [savedLocations, setSavedLocations] = useState([]);
 
     useEffect(() => {
-        const fetchLocations = async () => {
+        const fetchSavedLocations = async () => {
             const locations = await locationsService.getSavedLocations();
             setSavedLocations(locations);
         };
-        fetchLocations();
+        fetchSavedLocations();
     }, []);
+    console.log('Set locations provider: ', savedLocations)
 
     return (
         <SavedLocationsContext.Provider value={{ savedLocations, setSavedLocations }}>

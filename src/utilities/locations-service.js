@@ -5,7 +5,7 @@ export async function getSavedLocations() {
         const {
             data: { user },
         } = await db.auth.getUser();
-        const { data: userInteractions, error } = await supabase
+        const { data: userInteractions, error } = await db
             .from('user_interactions')
             .select('*, locations(*)')
             .eq('user_id', user.id);

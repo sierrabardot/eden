@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import { useSavedLocations } from "../../contexts/SavedLocationsProvider"
+import { useLoading } from '../../contexts/LoadingProvider'
 
 export function SavedLocations() {
     const { savedLocations } = useSavedLocations()
@@ -15,7 +16,7 @@ export function SavedLocations() {
                     ))}
                 </div>
             ) : (
-                <p>Loading..</p>
+                <LoadingSpinner />
             )}
         </div>
     )

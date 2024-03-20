@@ -7,6 +7,7 @@ import { NavBar } from '../../components/NavBar/NavBar';
 import { Home } from '../Home/Home';
 import './App.css';
 import { useAuth } from '../../contexts/AuthProvider';
+import { LoadingProvider } from '../../contexts/LoadingProvider';
 
 function App() {
     const { user } = useAuth();
@@ -14,28 +15,29 @@ function App() {
         <>
             <ErrorBoundary fallback={<div>Something went wrong!</div>}>
                 <Suspense fallback={<div>Loading...</div>}>
-                    <header>
-                        <NavBar />
-                    </header>
-                    <main className='App'>
-                        {user ? (
-                            <Routes>
-                                <Route path='/home' element={<Home />} />
-                                <Route path='/map' element={<MapPage />} />
-                                <Route path='*' element={<Navigate to='/home' />} />
-                            </Routes>
-                        ) : (
-                            <Routes>
-                                <Route path='/login' element={<AuthPage />} />
-                                <Route path='/signup' element={<AuthPage />} />
-                                <Route
-                                    path='*'
-                                    element={<Navigate to='/login' />}
-                                />
-                            </Routes>
-                        )}
-                    </main>
-                    <footer></footer>
+                    <LoadingProvider>
+                        <header>
+                            <NavBar />
+                        </header>
+                        <main className='App'>
+                            {user ? (
+                                <Routes>
+                                    <Route path='/home' element={<Home />} />
+                                    <Route path='/map' element={<MapPage />} />
+                                    <Route path='*' element={<Navigate to='/home' />} />
+                                </Routes>
+                            ) : (
+                                <Routes>
+                                    <Route path='/login' element={<AuthPage />} />
+                                    <Route path='/signup' element={<AuthPage />} />
+                                    <Route
+                                        path='*'
+                                        element={<Navigate to='/login' />}
+                                    />
+                                </Routes>
+                            )}
+                        </main>
+                    </LoadingProvider>
                 </Suspense>
             </ErrorBoundary>
         </>
