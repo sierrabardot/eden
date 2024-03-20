@@ -1,12 +1,15 @@
-import { HistoryLog } from "../HistoryLog/HistoryLog";
 import { SavedLocations } from "../SavedLocations/SavedLocations";
+import { useActiveComp } from "../../contexts/ActiveCompProvider";
 
-export function ActivePanel({ activeComponent }) {
+export function ActivePanel() {
+    const { activeComponent } = useActiveComp()
     return (
         <div>
-            {activeComponent === 2 && <SavedLocations />}
-            {activeComponent === 3 && <SavedLocations />}
-            {activeComponent === 3 && <HistoryLog />}
+            {activeComponent ? (
+                <div>TODO: create component</div>
+            ) : (
+                <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Culpa assumenda nesciunt ipsam eveniet quis dignissimos, perspiciatis accusamus quibusdam sapiente ipsum omnis quod. Minus cupiditate aliquid tempore porro, consequuntur a repellendus.</div>
+            )}
         </div>
     )
 }

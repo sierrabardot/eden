@@ -1,9 +1,12 @@
 import { useState, useEffect } from "react"
 import { APIProvider, Map, AdvancedMarker, Pin, InfoWindow } from "@vis.gl/react-google-maps"
 import { LocationInfo } from '../../components/LocationInfo/LocationInfo'
-import { MarkerComponent } from "./MarkerComponent/MarkerComponent";
+import { MarkerComponent } from "../../components/MarkerComponent/MarkerComponent";
+import { useLoading } from "../../contexts/LoadingProvider";
+import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 
 export function MapPage({locations = null}) {
+    const { loading, setLoading } = useLoading()
     const [userLocation, setUserLocation] = useState(null);
     const [error, setError] = useState(null)
     const [open, setOpen] = useState(false)
@@ -13,6 +16,7 @@ export function MapPage({locations = null}) {
     } else (
         useEffect(() => {
             function getLocation() {
+                setLoading(true)
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                     (position) => {
@@ -24,8 +28,10 @@ export function MapPage({locations = null}) {
                     (error) => {
                         setError('Error getting location: ', error);
                     });
+                    setLoading(false)
                 } else {
                     setError('Geolocation is not supported by this browser.');
+                    setLoading(false)
                 }};
                 getLocation();
                 center = userLocation ? userLocation : { lat: -37.8136, lng: 144.9631 };
@@ -47,7 +53,7 @@ export function MapPage({locations = null}) {
                         </APIProvider>
                     </div>
                 ) : (
-                    <div>Loading...</div>
+                    <LoadingSpinner/>
                 )}
             {error && error}
         </div>
