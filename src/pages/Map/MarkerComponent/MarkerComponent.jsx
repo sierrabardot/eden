@@ -2,7 +2,7 @@ import { AdvancedMarker, Pin } from "@vis.gl/react-google-maps";
 
 export function MarkerComponent({ location }) {
     return (
-        <AdvancedMarker position={location} onClick={() => setOpen(true)}>
+        <AdvancedMarker position={location}>
             <Pin background={"gold"} glyphColor={"black"} borderColor={"black"} />
         </AdvancedMarker>
     )

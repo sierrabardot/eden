@@ -1,7 +1,9 @@
 import {  useState } from 'react';
 import * as usersService from '../../utilities/users-service'
+import { useAuth } from '../../contexts/AuthProvider';
 
-export function LoginForm({ user, setUser }) {
+export function LoginForm() {
+    const { setUser } = useAuth()
     const [form, setForm] = useState({
         email: '',
         password: '',

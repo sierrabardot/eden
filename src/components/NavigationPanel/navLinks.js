@@ -27,7 +27,6 @@ const navigationLinks = [
         path: '/',
         title: 'Log Out',
         icon: '',
-        // action: handleLogOut,
     },
 ];
 

@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
 import navigationLinks from './navLinks'
 import { logout } from '../../utilities/users-service'
+import { useAuth } from '../../contexts/AuthProvider';
 
-export function NavigationPanel({ setUser, setActiveComponent }) {
+export function NavigationPanel({ setActiveComponent }) {
+    const { user, setUser } = useAuth()
     function handleLogOut() {
         logout();
         setUser(null);
     }
-    
+
     return (
         <div className="container-fluid text-center border">
             <div className="row justify-content-start">

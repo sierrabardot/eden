@@ -1,13 +1,9 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { logout } from '../../utilities/users-service';
+import { useAuth } from '../../contexts/AuthProvider';
 
-export function NavBar({ user, setUser }) {
-    function handleLogOut() {
-        logout();
-        setUser(null);
-    }
-
+export function NavBar() {
+    const { user } = useAuth()
     return (
         <nav className='navbar navbar-expand-lg bg-body-tertiary'>
             <div className='container'>

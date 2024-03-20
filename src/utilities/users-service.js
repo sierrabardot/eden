@@ -6,10 +6,14 @@ export async function logout() {
 }
 
 export async function getUser() {
-    const {
-        data: { user },
-    } = await db.auth.getUser();
-    return user;
+    try {
+        const {
+            data: { user },
+        } = await db.auth.getUser();
+        return user;
+    } catch (error) {
+        console.error(error);
+    }
 }
 
 export async function login(loginData) {
