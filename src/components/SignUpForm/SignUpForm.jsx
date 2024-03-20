@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import * as usersService from '../../utilities/users-service';
+import { useAuth } from '../../contexts/AuthProvider';
 
-export function SignUpForm({ setUser }) {
+export function SignUpForm() {
+    const { setUser } = useAuth()
     const [error, setError] = useState(null);
 
     const [form, setForm] = useState({

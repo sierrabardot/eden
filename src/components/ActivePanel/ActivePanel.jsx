@@ -5,7 +5,8 @@ export function ActivePanel({ activeComponent }) {
     return (
         <div>
             {activeComponent === 2 && <SavedLocations />}
-            {activeComponent === 3 && <SearchComponent />}
+            {activeComponent === 3 && <SavedLocations />}
+            {activeComponent === 3 && <HistoryLog />}
         </div>
     )
 }
