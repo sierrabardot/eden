@@ -9,8 +9,8 @@ export function ActivePanel() {
                     {activeComponent === 'Saved Locations' && (
                         <div>
                             <p>TODO: display required info</p>
-                            <button disabled={activeComponentData.is_wishlist}>Wishlist</button>
-                            <button disabled={activeComponentData.is_favourite}>Favourite</button>
+                            <button className="btn btn-dark" disabled={activeComponentData.is_wishlist}>Wishlist</button>
+                            <button className="btn btn-dark" disabled={activeComponentData.is_favourite}>Favourite</button>
                         </div>
                     )}
                     {activeComponent === 'History' && (
