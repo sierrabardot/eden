@@ -25,7 +25,6 @@ export function NavigationPanel() {
     }
 
     async function handleSetActiveComponent(navOption) {
-        console.log(navOption)
         let data; 
         if (navOption === 'Search') {
             data = await locationsService.getLocations()

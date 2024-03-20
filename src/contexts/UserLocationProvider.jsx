@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from 'react';
 const UserLocationContext = createContext({})
 
 export const UserLocationProvider = ({ children }) => {
-    const [userLocation, setUserLocation] = useState([])
+    const [userLocation, setUserLocation] = useState(null)
     
     useEffect(() => {
         const getLocation = () => {
@@ -25,7 +25,7 @@ export const UserLocationProvider = ({ children }) => {
         };
         getLocation();
     }, []);
-        console.log(userLocation)
+    console.log(userLocation)
 
     return (
         <UserLocationContext.Provider value={{userLocation, setUserLocation}}>

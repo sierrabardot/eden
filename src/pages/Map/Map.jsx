@@ -2,7 +2,6 @@ import { useState } from "react"
 import { APIProvider, Map } from "@vis.gl/react-google-maps"
 import { LocationInfo } from '../../components/LocationInfo/LocationInfo'
 import { MarkerComponent } from "../../components/MarkerComponent/MarkerComponent";
-import { LoadingSpinner } from '../../components/LoadingSpinner/LoadingSpinner'
 import { useUserLocation } from "../../contexts/UserLocationProvider";
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
 
@@ -14,8 +13,6 @@ export function MapPage() {
     // const { activeComponentData } = useActiveComp()
 
     const center = userLocation ? userLocation : { lat: -37.8136, lng: 144.9631 };
-
-    if (!userLocation) return <LoadingSpinner />
 
     return (
         <div className="row my-2">
