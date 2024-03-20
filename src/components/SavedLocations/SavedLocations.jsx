@@ -1,18 +1,8 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import * as locationsService from '../../utilities/locations-service'
+import { useSavedLocations } from "../../contexts/SavedLocationsProvider"
 
 export function SavedLocations() {
-    const [savedLocations, setSavedLocations] = useState([])
-
-    useEffect(() => {
-        const fetchLocations = async () => {
-            const locations = await locationsService.getSavedLocations();
-            setSavedLocations(locations)
-        }
-        fetchLocations()
-        }, [])
-        console.log(savedLocations)
+    const { savedLocations } = useSavedLocations()
 
     return (
         <div>

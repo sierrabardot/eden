@@ -4,7 +4,7 @@ import { logout } from '../../utilities/users-service'
 import { useAuth } from '../../contexts/AuthProvider';
 
 export function NavigationPanel({ setActiveComponent }) {
-    const { user, setUser } = useAuth()
+    const { setUser } = useAuth()
     function handleLogOut() {
         logout();
         setUser(null);
