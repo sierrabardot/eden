@@ -19,14 +19,11 @@ export async function getSavedLocations() {
     }
 }
 
-export async function getNearbyLocations(userLocation, range) {
+export async function getNearbyLocations(userLocation, range = 10) {
+    const [minLat, maxLat, minLng, maxLng] = findBounds(userLocation, range);
+    const url = `${API_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=500&offset=0&api_key=${API_KEY}`;
+
     try {
-        const [minLat, maxLat, minLng, maxLng] = findBounds(
-            userLocation,
-            range
-        );
-        const url = `${API_URL}/locations/bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=500&offset=0&api_key=${API_KEY}`;
-        console.log(url);
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
@@ -38,13 +35,16 @@ export async function getNearbyLocations(userLocation, range) {
 }
 
 function findBounds(userLocation, range) {
+    console.log(userLocation);
     const latDiff = range / 111.32;
     const lngDiff =
         range / (111.32 * Math.cos(userLocation.lat * (Math.PI / 180)));
 
-    const minLat = userLocation.lat - latDiff;
-    const maxLat = userLocation.lat + latDiff;
-    const minLng = userLocation.lng - lngDiff;
-    const maxLng = userLocation.lng + lngDiff;
-    return [minLat, maxLat, minLng, maxLng];
+    const minLat = (userLocation.lat - latDiff).toFixed(4);
+    const maxLat = (userLocation.lat + latDiff).toFixed(4);
+    const minLng = (userLocation.lng - lngDiff).toFixed(4);
+    const maxLng = (userLocation.lng + lngDiff).toFixed(4);
+    const result = [minLat, maxLat, minLng, maxLng];
+    console.log(result);
+    return result;
 }
