@@ -2,7 +2,6 @@ import { Suspense, useState, useEffect } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { AuthPage } from '../AuthPage/AuthPage';
 import { MapPage } from '../Map/Map'
-import { Search } from '../Search/Search'
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { Home } from '../Home/Home';
@@ -32,7 +31,6 @@ function App() {
                             <Routes>
                                 <Route path='/home' element={<Home setUser={setUser} />} />
                                 <Route path='/map' element={<MapPage />} />
-                                <Route path='/search' element={<Search />} />
                                 <Route path='*' element={<Navigate to='/home' />} />
                             </Routes>
                         ) : (

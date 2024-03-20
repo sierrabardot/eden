@@ -1,16 +1,17 @@
 import db from '../config/dbClient';
 
-export async function fetchUserLocations() {
-    const {
-        data: { user },
-    } = await db.auth.getUser();
-    if (user) {
-        const { data, error } = await db.from('locations').select('*');
-        if (error) {
-            console.error('Error fetching locations:', error.message);
-        } else {
-            console.log('User locations:', data);
-            return data;
-        }
+export async function getSavedLocations() {
+    try {
+        const {
+            data: { user },
+        } = await db.auth.getUser();
+        const { data: userInteractions, error } = await db
+            .from('user_interactions')
+            .select('*, locations(*)')
+            .eq('user_id', user.id);
+        return userInteractions;
+    } catch (error) {
+        console.error('Error fetching user interactions:', error.message);
+        throw new Error(error.message);
     }
 }

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import navigationLinks from './navLinks.json'
+import navigationLinks from './navLinks'
 import { logout } from '../../utilities/users-service'
 
 export function NavigationPanel({ setUser, setActiveComponent }) {
