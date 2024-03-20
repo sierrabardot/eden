@@ -12,7 +12,7 @@ export function MapPage({locations = null}) {
     const [open, setOpen] = useState(false)
     let center = {}
     if (locations) {
-
+        // TODO: if locations, show markers for those locations on map
     } else (
         useEffect(() => {
             function getLocation() {
