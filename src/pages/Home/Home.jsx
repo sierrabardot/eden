@@ -1,4 +1,4 @@
-import { NavigationPanel } from "../../components/NavigationPanel/NavigationPanel"
+import { NavigationComponent } from "../../components/NavigationComponent/NavigationComponent"
 import { ActivePanel } from "../../components/ActivePanel/ActivePanel"
 import { SavedLocationsProvider } from "../../contexts/SavedLocationsProvider"
 import { ActiveCompProvider } from "../../contexts/ActiveCompProvider"
@@ -15,7 +15,7 @@ export function Home() {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-4">
-                            <NavigationPanel />
+                            <NavigationComponent />
                         </div>
                         <div className="col-md-8">
                             <ActivePanel />

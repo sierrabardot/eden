@@ -1,31 +1,34 @@
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
+import { AdventureLogItem } from "../NavigationComponent/AdventureLogItem/AdventureLogItem";
+import { SavedLocations } from "../NavigationComponent/SavedLocations/SavedLocations";
+import { SearchItem } from "../NavigationComponent/SearchItem/SearchItem";
 
 export function ActivePanel() {
     const { activeComponent, activeComponentData } = useActiveComp()
+    console.log(activeComponentData)
     return (
         <div>
             {activeComponent ? (
                 <div>
-                    {activeComponent === 'Saved Locations' && (
+                    {activeComponent === 'Adventure Log' && (
                         <div>
-                            <p>TODO: display required info</p>
-                            <button className="btn btn-dark" disabled={activeComponentData.is_wishlist}>Wishlist</button>
-                            <button className="btn btn-dark" disabled={activeComponentData.is_favourite}>Favourite</button>
-                        </div>
-                    )}
-                    {activeComponent === 'History' && (
-                        <div>
-                            <p>TODO: create history component</p>
+                            {activeComponentData.map(record => (
+                                <AdventureLogItem key={record.id} location={record} />
+                            ))}
                         </div>
                     )}
                     {activeComponent === 'Search' && (
                         <div>
-                            <p>TODO: create search component</p>
+                            {activeComponentData.map(location => (
+                                <SearchItem key={location.id} location={location} />
+                            ))}
                         </div>
                     )}
-                    {activeComponent === 'Settings' && (
+                    {activeComponent === 'Saved Spots' && (
                         <div>
-                            <p>TODO: add settings to update user info</p>
+                            {activeComponentData.map(location => (
+                                <SavedLocations key={location.id} location={location} />
+                            ))}
                         </div>
                     )}
                 </div>

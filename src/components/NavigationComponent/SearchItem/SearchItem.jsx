@@ -1,4 +1,4 @@
-export function AdventureLog() {
+export function SearchItem({ location }) {
     return (
         <div>
             <p>{location.city}</p>

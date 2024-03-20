@@ -25,7 +25,6 @@ export const UserLocationProvider = ({ children }) => {
         };
         getLocation();
     }, []);
-    console.log(userLocation)
 
     return (
         <UserLocationContext.Provider value={{userLocation, setUserLocation}}>

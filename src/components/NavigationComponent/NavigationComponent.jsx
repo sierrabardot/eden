@@ -6,13 +6,13 @@ import * as locationsService from '../../utilities/locations-service'
 import { useSavedLocations } from '../../contexts/SavedLocationsProvider';
 import { useUserLocation } from '../../contexts/UserLocationProvider';
 
-export function NavigationPanel() {
+export function NavigationComponent() {
     const { setUser } = useAuth()
     const { setData } = useActiveComp()
     const { savedLocations } = useSavedLocations()
     const { userLocation } = useUserLocation()
 
-        const navOptions = [
+    const navOptions = [
         { name: 'Explore', path: '/map' },
         { name: 'Saved Spots' },
         { name: 'Adventure Log' },
@@ -34,7 +34,6 @@ export function NavigationPanel() {
             data = savedLocations
         }
         setData(navOption, data)
-        console.log(data)
     }    
 
     return (

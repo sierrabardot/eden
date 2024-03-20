@@ -26,7 +26,6 @@ export async function getNearbyLocations(userLocation, range = 10) {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
         return data;
     } catch (error) {
         console.error(error);
@@ -35,7 +34,6 @@ export async function getNearbyLocations(userLocation, range = 10) {
 }
 
 function findBounds(userLocation, range) {
-    console.log(userLocation);
     const latDiff = range / 111.32;
     const lngDiff =
         range / (111.32 * Math.cos(userLocation.lat * (Math.PI / 180)));
@@ -44,7 +42,6 @@ function findBounds(userLocation, range) {
     const maxLat = (userLocation.lat + latDiff).toFixed(4);
     const minLng = (userLocation.lng - lngDiff).toFixed(4);
     const maxLng = (userLocation.lng + lngDiff).toFixed(4);
-    const result = [minLat, maxLat, minLng, maxLng];
-    console.log(result);
-    return result;
+
+    return [minLat, maxLat, minLng, maxLng];
 }
