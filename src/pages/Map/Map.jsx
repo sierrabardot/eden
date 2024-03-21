@@ -16,7 +16,7 @@ export function MapPage() {
 
     return (
         <div className="row my-2">
-            <div className="col-md-8">
+            <div className="col-md-7">
                 <APIProvider apiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
                     <div className="container-fluid vh-100 h-50">
                         <Map defaultZoom={10} defaultCenter={center} mapId={import.meta.env.VITE_APP_GOOGLE_MAPS_MAP_ID} />
@@ -24,7 +24,7 @@ export function MapPage() {
                 </APIProvider>
                 {error && error}
             </div>
-            <div className="col-md-4">
+            <div className="col-md-5">
                 <LocationInfo />
             </div>
         </div>

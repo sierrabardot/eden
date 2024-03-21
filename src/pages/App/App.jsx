@@ -5,7 +5,6 @@ import { MapPage } from '../Map/Map';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { NavBar } from '../../components/NavBar/NavBar';
 import { Home } from '../Home/Home';
-import './App.css';
 import { useAuth } from '../../contexts/AuthProvider';
 import { LoadingProvider } from '../../contexts/LoadingProvider';
 import { UserLocationProvider } from '../../contexts/UserLocationProvider';

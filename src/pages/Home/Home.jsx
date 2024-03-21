@@ -14,18 +14,18 @@ export function Home() {
                 {userLocation ? (
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-4">
+                        <div className="col-md-5">
                             <NavigationComponent />
                         </div>
-                        <div className="col-md-8">
+                        <div className="col-md-7">
                             <ActivePanel />
                         </div>
                     </div>
                 </div>
                 ) : (
-                    <div className="d-flex justify-content-center align-items-center  flex-column " >
-                        <LoadingSpinner className="d-flex" />
-                        <p>To provide you with the best experience, we need to know where you are!</p>
+                    <div className="d-flex justify-content-center align-items-center flex-column " >
+                        <LoadingSpinner />
+                        <p>To provide you with the best experience, we need to know where you are.</p>
                         <p>Please allow location services to continue.</p>
                     </div>
                 )}

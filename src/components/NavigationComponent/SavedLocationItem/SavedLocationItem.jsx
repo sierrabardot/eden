@@ -1,4 +1,4 @@
-export function SavedLocations({ location }) {
+export function SavedLocationItem({ location }) {
 
     return (
         <div>

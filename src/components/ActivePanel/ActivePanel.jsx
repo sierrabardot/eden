@@ -1,6 +1,6 @@
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
 import { AdventureLogItem } from "../NavigationComponent/AdventureLogItem/AdventureLogItem";
-import { SavedLocations } from "../NavigationComponent/SavedLocations/SavedLocations";
+import { SavedLocationItem } from "../NavigationComponent/SavedLocationItem/SavedLocationItem";
 import { SearchItem } from "../NavigationComponent/SearchItem/SearchItem";
 import { useLoading } from "../../contexts/LoadingProvider";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner"
@@ -37,7 +37,7 @@ export function ActivePanel() {
                                 <div>
                                     <Link to='/map' className="btn btn-primary">View on Map</Link>
                                     {activeComponentData.map(location => (
-                                        <SavedLocations key={location.id} location={location} />
+                                        <SavedLocationItem key={location.id} location={location} />
                                     ))}
                                 </div>
                             )}
