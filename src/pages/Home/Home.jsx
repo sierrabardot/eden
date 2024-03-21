@@ -25,7 +25,8 @@ export function Home() {
                 ) : (
                     <div className="d-flex justify-content-center align-items-center  flex-column " >
                         <LoadingSpinner className="d-flex" />
-                        <p>Geolocation is required to use this website.</p>
+                        <p>To provide you with the best experience, we need to know where you are!</p>
+                        <p>Please allow location services to continue.</p>
                     </div>
                 )}
             </ActiveCompProvider>

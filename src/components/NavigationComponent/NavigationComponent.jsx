@@ -5,16 +5,18 @@ import { useActiveComp } from '../../contexts/ActiveCompProvider';
 import * as locationsService from '../../utilities/locations-service'
 import { useSavedLocations } from '../../contexts/SavedLocationsProvider';
 import { useUserLocation } from '../../contexts/UserLocationProvider';
+import { useLoading } from '../../contexts/LoadingProvider';
 
 export function NavigationComponent() {
     const { setUser } = useAuth()
     const { setData } = useActiveComp()
     const { savedLocations } = useSavedLocations()
     const { userLocation } = useUserLocation()
+    const { setLoading } = useLoading()
 
     const navOptions = [
         { name: 'Explore', path: '/map' },
-        { name: 'Saved Spots' },
+        { name: 'Saved Locations' },
         { name: 'Adventure Log' },
         { name: 'Search' },
         { name: 'Settings' },
@@ -27,14 +29,32 @@ export function NavigationComponent() {
     }
 
     async function handleSetActiveComponent(navOption) {
-        let data; 
+        setLoading(true);
+        let data;
+
         if (navOption === 'Search') {
-            data = await locationsService.getNearbyLocations(userLocation)
+            data = await locationsService.getNearbyLocations(userLocation);
         } else {
-            data = savedLocations
+            data = savedLocations.filter(location => {
+                if (navOption === 'Adventure Log') {
+                    return location.has_visited;
+                } else {
+                    return location.is_wishlist || location.is_favourite;
+                }
+            });
+            await Promise.all(data.map(async (location) => {
+                location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
+            }));
         }
-        setData(navOption, data)
-    }    
+        
+        setData(navOption, data);
+        setLoading(false);
+    }
+
+    async function fetchPlantNames(ids) {
+        const data = await locationsService.getPlantNames(ids);
+        return data;
+    }
 
     return (
         <div className="container-fluid text-center py-4">

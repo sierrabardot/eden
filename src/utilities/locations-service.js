@@ -19,6 +19,23 @@ export async function getSavedLocations() {
     }
 }
 
+export async function getPlantNames(ids) {
+    try {
+        const plantNames = await Promise.all(
+            ids.map(async (id) => {
+                const url = `${API_URL}/types/${id}?api_key=${API_KEY}`;
+                const response = await fetch(url);
+                const data = await response.json();
+                return [data.scientific_names[0], data.common_names.en[0]];
+            })
+        );
+        return plantNames;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Unable to fetch plant types.');
+    }
+}
+
 export async function getNearbyLocations(userLocation, range = 10) {
     const [minLat, maxLat, minLng, maxLng] = findBounds(userLocation, range);
     const url = `${API_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=500&offset=0&api_key=${API_KEY}`;
