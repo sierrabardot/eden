@@ -1,6 +1,6 @@
 import db from '../config/dbClient';
 
-const API_URL = 'https://fallingfruit.org/api/0.3';
+const BASE_URL = 'https://fallingfruit.org/api/0.3';
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
 export async function getSavedLocations() {
@@ -19,11 +19,23 @@ export async function getSavedLocations() {
     }
 }
 
+export async function getLocationData(id) {
+    const url = `${BASE_URL}/locations/${id}?api_key=${API_KEY}`;
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Unable to fetch location data.');
+    }
+}
+
 export async function getPlantNames(ids) {
     try {
         const plantNames = await Promise.all(
             ids.map(async (id) => {
-                const url = `${API_URL}/types/${id}?api_key=${API_KEY}`;
+                const url = `${BASE_URL}/types/${id}?api_key=${API_KEY}`;
                 const response = await fetch(url);
                 const data = await response.json();
                 return [data.scientific_names[0], data.common_names.en[0]];
@@ -38,7 +50,7 @@ export async function getPlantNames(ids) {
 
 export async function getNearbyLocations(userLocation, range = 10) {
     const [minLat, maxLat, minLng, maxLng] = findBounds(userLocation, range);
-    const url = `${API_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=500&offset=0&api_key=${API_KEY}`;
+    const url = `${BASE_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=5&offset=0&api_key=${API_KEY}`;
 
     try {
         const response = await fetch(url);

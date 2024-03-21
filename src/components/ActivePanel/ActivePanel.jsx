@@ -20,8 +20,8 @@ export function ActivePanel() {
                         <div>
                             {activeComponent === 'Adventure Log' && (
                                 <div>
-                                    {activeComponentData.map(record => (
-                                        <AdventureLogItem key={record.id} location={record} />
+                                    {activeComponentData.map(location => (
+                                        <AdventureLogItem key={location.id} record={location} />
                                     ))}
                                 </div>
                             )}

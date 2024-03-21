@@ -33,7 +33,17 @@ export function NavigationComponent() {
         let data;
 
         if (navOption === 'Search') {
-            data = await locationsService.getNearbyLocations(userLocation);
+            const nearbyLocations =  await locationsService.getNearbyLocations(userLocation);
+            const locationPromises = nearbyLocations.map(async (location) => {
+                return {
+                    ...location,
+                    locationData: await fetchLocationData(location.id)
+                }
+            })
+            data = await Promise.all(locationPromises);
+            await Promise.all(data.map(async (location) => {
+                location.type_names = await fetchPlantNames(location.type_ids);
+            }));
         } else {
             data = savedLocations.filter(location => {
                 if (navOption === 'Adventure Log') {
@@ -46,9 +56,14 @@ export function NavigationComponent() {
                 location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
             }));
         }
-        
+
         setData(navOption, data);
         setLoading(false);
+    }
+
+    async function fetchLocationData(id) {
+        const data = await locationsService.getLocationData(id);
+        return data;
     }
 
     async function fetchPlantNames(ids) {

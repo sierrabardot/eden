@@ -1,8 +1,7 @@
-export function AdventureLogItem({ location }) {
+export function AdventureLogItem({ record }) {
+    
     return (
         <div>
-            <p>{location.locations.city}</p>
-            <p>{location.locations.state}</p>
         </div>
     )
 }

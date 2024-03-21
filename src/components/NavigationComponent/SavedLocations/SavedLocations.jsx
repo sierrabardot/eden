@@ -1,5 +1,4 @@
 export function SavedLocations({ location }) {
-    console.log(location.locations.type_names)
 
     return (
         <div>
