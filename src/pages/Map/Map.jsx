@@ -4,6 +4,7 @@ import { LocationInfo } from '../../components/LocationInfo/LocationInfo'
 import { MarkerComponent } from "../../components/MarkerComponent/MarkerComponent";
 import { useUserLocation } from "../../contexts/UserLocationProvider";
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
+import { NavBar } from "../../components/NavBar/NavBar";
 
 export function MapPage() {
     const { userLocation } = useUserLocation()
@@ -16,6 +17,9 @@ export function MapPage() {
 
     return (
         <div className="row my-2">
+            <header>
+                <NavBar />
+            </header>
             <div className="col-md-7">
                 <APIProvider apiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
                     <div className="container-fluid vh-100 h-50">

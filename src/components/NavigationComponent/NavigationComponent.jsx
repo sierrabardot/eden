@@ -76,7 +76,7 @@ export function NavigationComponent() {
             <div className="row justify-content-start">
                 {navOptions.map(option => (
                     <div className="col-md-6" key={option.name}>
-                        <div className="card m-2" onClick={option.action ? option.action : () => handleSetActiveComponent(option.name)}>
+                        <div className="card m-2 link" onClick={option.action ? option.action : () => handleSetActiveComponent(option.name)}>
                             {option.path ? (
                                 <Link className="card-body text-decoration-none" to={option.path}>
                                     <div className="card-title">{option.name}</div>

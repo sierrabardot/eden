@@ -1,3 +1,70 @@
+:root {
+    --dark-green: #00380d;
+    --forest-green: #0c5629;
+    --light-green: #a8d5ae;
+    --sky-blue: #079dd8;
+    --light-blue: #addaec;
+    --red: #ec5b60;
+}
+
 body {
     font-family: 'Poppins', sans-serif;
+}
+
+.btn:hover,
+a:hover,
+.link:hover {
+    cursor: pointer;
+}
+
+.bg-green {
+    background-color: var(--forest-green);
+}
+
+.bg-dark-green {
+    background-color: var(--dark-green);
+}
+
+.bg-blue {
+    background-color: var(--sky-blue);
+}
+
+.bg-image {
+    background-image: url('/public/assets/landing-page-bg.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-rhs {
+    background-image: url('/public/assets/other/bg-2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.text-light-blue {
+    color: var(--light-blue);
+}
+
+.logo-white {
+    height: 100px;
+}
+
+.logo-dashboard {
+    width: 100px;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.icon-height {
+    height: 30px;
+}
+
+.eden-logo {
+    max-width: 400px;
+}
+
+.spacer {
+    height: 200px;
 }

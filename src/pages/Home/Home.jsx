@@ -4,6 +4,7 @@ import { SavedLocationsProvider } from "../../contexts/SavedLocationsProvider"
 import { ActiveCompProvider } from "../../contexts/ActiveCompProvider"
 import { useUserLocation } from "../../contexts/UserLocationProvider"
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner"
+import { NavBar } from "../../components/NavBar/NavBar"
 
 export function Home() {
     const { userLocation } = useUserLocation()
@@ -11,6 +12,9 @@ export function Home() {
     return (
         <SavedLocationsProvider>
             <ActiveCompProvider>
+                <header>
+                    <NavBar />
+                </header>
                 {userLocation ? (
                 <div className="container-fluid">
                     <div className="row">

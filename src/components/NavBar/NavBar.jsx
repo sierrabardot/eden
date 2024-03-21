@@ -1,52 +1,24 @@
-import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthProvider';
 
 export function NavBar() {
-    const { user } = useAuth()
+    const {user} = useAuth()
+    
     return (
-        <nav className='navbar navbar-expand-lg bg-body-tertiary'>
-            <div className='container'>
-                <NavLink to='/' className='text-decoration-none'>
-                    <div className='navbar-brand mb-0 h1'>Eden</div>
+        <nav className='navbar bg-opacity-10 bg-green'>
+            <div className='container-fluid d-flex flex-row justify-content-between'>
+                <NavLink to='/'>
+                    <img src="/assets/logo_white.png" className='logo-white' alt="Eden Logo"/>
                 </NavLink>
-                <button
-                    className='navbar-toggler'
-                    type='button'
-                    data-bs-toggle='collapse'
-                    data-bs-target='#navbarNav'
-                    aria-controls='navbarNav'
-                    aria-expanded='false'
-                    aria-label='Toggle navigation'>
-                    <span className='navbar-toggler-icon'></span>
-                </button>
-            </div>
-            {!user && (
-                <div
-                    className='collapse navbar-collapse'
-                    id='navbarNavAltMarkup'>
-                    <ul className='navbar-nav gap-3'>
-                        <li className='nav-item'>
-                            <NavLink
-                                className={({ isActive }) =>
-                                    'nav-link' + (isActive ? ' active' : '')
-                                }
-                                to='/signup'>
-                                Sign Up
-                            </NavLink>
-                        </li>
-                        <li className='nav-item'>
-                            <NavLink
-                                className={({ isActive }) =>
-                                    'nav-link' + (isActive ? ' active' : '')
-                                }
-                                to='/login'>
-                                Log In
-                            </NavLink>
-                        </li>
-                    </ul>
+                <div className='flex-row d-flex'>
+                    <NavLink to='/' className="text-decoration-none">
+                        <div className='text-white fw-semibold'>
+                            Dashboard
+                        </div>
+                    </NavLink>
+                    <div className='text-white mx-5'>Welcome, {user.user_metadata.username}</div>
                 </div>
-            )}
+            </div>
         </nav>
     );
 }
