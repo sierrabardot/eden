@@ -25,7 +25,7 @@ export function NavigationComponent() {
             img: '/assets/card-backgrounds/card_saved.png'
         },
         {
-            name: 'Search',
+            name: 'Find Nearby Locations',
             img: '/assets/card-backgrounds/card_search.png'
         },
         {
@@ -43,38 +43,64 @@ export function NavigationComponent() {
     async function handleSetActiveComponent(navOption) {
         setLoading(true);
         let data;
-
-        if (navOption === 'Search') {
-            const nearbyLocations =  await locationsService.getNearbyLocations(userLocation);
-            const locationPromises = nearbyLocations.map(async (location) => {
-                return {
-                    ...location,
-                    locationData: await fetchLocationData(location.id)
-                }
-            })
-            data = await Promise.all(locationPromises);
-            await Promise.all(data.map(async (location) => {
-                location.type_names = await fetchPlantNames(location.type_ids);
-            }));
+        if (navOption === 'Saved Locations') {
+            try {
+                data = savedLocations.filter(location => location.is_favourite);
+                const apiLocationData = await Promise.all(data.map(async (location) => {
+                    return {
+                        ...location,
+                        locationData: await fetchLocationData(location.loc_id)
+                    }
+                }));
+                const dataWithPlantNames = await Promise.all(apiLocationData.map(async (location) => {
+                    location.locationData.type_names = await fetchPlantNames(location.locationData.type_ids);
+                    return location;
+                }));
+                setData(navOption, dataWithPlantNames);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+            }
         } else {
-            data = savedLocations.filter(location => location.is_favourite
-            );
-            await Promise.all(data.map(async (location) => {
-                location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
-            }));
+            try {
+                const nearbyLocations =  await locationsService.getNearbyLocations(userLocation);
+                const apiLocationData = await Promise.all(nearbyLocations.map(async (location) => {
+                    return {
+                        ...location,
+                        locationData: await fetchLocationData(location.id)
+                    }
+                }))
+                const dataWithPlantNames = await Promise.all(apiLocationData.map(async (location) => {
+                    location.type_names = await fetchPlantNames(location.type_ids);
+                    return location;
+                }));
+                setData(navOption, dataWithPlantNames);
+            } catch (error) {
+                console.error(error)
+            } finally {
+                setLoading(false);
+            }
         }
-        setData(navOption, data);
-        setLoading(false);
     }
 
     async function fetchLocationData(id) {
-        const data = await locationsService.getLocationData(id);
-        return data;
+        try {
+            const data = await locationsService.getLocationData(id);
+            return data;
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
     }
 
     async function fetchPlantNames(ids) {
-        const data = await locationsService.getPlantNames(ids);
-        return data;
+        try {
+            const data = await locationsService.getPlantNames(ids);
+            return data;
+        } catch (error) {
+            console.error(error)
+        }
     }
 
     return (

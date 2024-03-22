@@ -8,7 +8,7 @@ export async function getSavedLocations() {
         } = await supabase.auth.getUser();
         const { data: userInteractions, error } = await supabase
             .from('user_interactions')
-            .select('*, locations(*)')
+            .select('*')
             .eq('user_id', user.id);
         return userInteractions;
     } catch (error) {
@@ -17,12 +17,8 @@ export async function getSavedLocations() {
     }
 }
 
-export async function updateFavourite(value, apiId, locationId = null) {
+export async function updateFavourite(value, locationId = null) {
     try {
-        if (!locationId) {
-            const location = await addLocation(apiId);
-            console.log(location);
-        }
         const { data, error } = await supabase
             .from('user_interactions')
             .update({ is_favourite: value })
@@ -35,46 +31,26 @@ export async function updateFavourite(value, apiId, locationId = null) {
     }
 }
 
-export async function addLocation(apiId) {
-    const locationData = await getLocationData(apiId);
-    try {
-        const { data, error } = await supabase
-            .from('locations')
-            .insert({
-                lat: locationData.lat,
-                lng: locationData.lng,
-                type_ids: locationData.type_ids,
-                description: locationData.description,
-                api_id: locationData.id,
-            })
-            .select();
-        if (error) {
-            console.log(error);
-        }
-        const userInteraction = await addLocationToFavourites(data[0]);
-        return userInteraction;
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-async function addLocationToFavourites(location) {
+export async function addLocationToFavourites(id) {
     try {
         const {
             data: { user },
         } = await supabase.auth.getUser();
-        const interactionData = {
-            user_id: user.id,
-            location_id: location.id,
-            is_favourite: true,
-        };
         const { data, error } = await supabase
             .from('user_interactions')
-            .insert(interactionData)
+            .insert({
+                user_id: user.id,
+                loc_id: id,
+                is_favourite: true,
+            })
             .select();
-
-        console.log(data);
-        return data;
+        const locationData = await getLocationData(id);
+        const newLocation = {
+            ...data[0],
+            locationData,
+        };
+        console.log(newLocation);
+        return newLocation;
     } catch (error) {
         console.error(error);
     }

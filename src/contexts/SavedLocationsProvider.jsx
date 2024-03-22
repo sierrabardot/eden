@@ -13,6 +13,7 @@ export const SavedLocationsProvider = ({ children }) => {
             setLoading(true)
             const locations = await userInteractionsService.getSavedLocations();
             setSavedLocations(locations);
+
             setLoading(false)
         };
         fetchSavedLocations();

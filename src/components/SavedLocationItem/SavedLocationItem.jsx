@@ -4,35 +4,39 @@ import { useLoading } from '../../contexts/LoadingProvider'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
 import { updateFavourite } from '../../utilities/user-interactions-service'
 import { useSavedLocations } from '../../contexts/SavedLocationsProvider'
+import { useActiveComp } from '../../contexts/ActiveCompProvider'
 
 export function SavedLocationItem({ location }) {
     const { loading, setLoading } = useLoading()
-    const [address, setAddress] = useState()
+    // const [address, setAddress] = useState()
     const [isFavourite, setIsFavourite] = useState(location.is_favourite)
     const { savedLocations, setSavedLocations } = useSavedLocations()
+    const { setData } = useActiveComp()
+    console.log(location)
     
-    useEffect(() => {
-        async function fetchAddress(lat, lng) {
-            const address = await getAddress(lat, lng)
-            setAddress(address)
-        }
-        fetchAddress(location.locations.lat, location.locations.lng)
-    }, [])
+    // useEffect(() => {
+    //     async function fetchAddress(lat, lng) {
+    //         const address = await getAddress(lat, lng)
+    //         setAddress(address)
+    //     }
+    //     fetchAddress(location.locations.lat, location.locations.lng)
+    // }, [])
 
     async function handleClickIcon() {
-        let updatedLocation
+        let updatedFavourite
         try {
             const value = !isFavourite;
-            updatedLocation = await updateFavourite(value, location.locations.api_id, location.id)
+            updatedFavourite = await updateFavourite(value, location.locations.api_id, location.id)
             setIsFavourite(updatedLocation.is_favourite)
         } catch (error) {
             console.error('Error handling icon click', error)
         } finally {
-            if (updatedLocation) {
+            if (updatedFavourite) {
                 setSavedLocations(savedLocations.map((location) => {
-                    return location.id === updatedLocation.id ? updatedLocation : location
+                    return location.id === updatedFavourite.id ? updatedFavourite : location
                 }))
             }
+            setData('Saved Locations', savedLocations)
         }
     }
 
@@ -44,11 +48,17 @@ export function SavedLocationItem({ location }) {
                     <img className="icon-height link" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_saved_${isFavourite ? 'active' : 'inactive'}.png`} disabled={loading} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
                 </div>
                 <div className="w-100 mx-4">
-                    <div className="mb-2 fw-semibold">{address}</div>
-                    {location.locations.description && (
-                    <div className="mb-2">{location.locations.description}</div>
+                            {location.locationData.address ? (
+                                <div className="mb-2">{location.locationData.address}</div>
+                            ) : (
+                                <>
+                                    <div className="mb-2 fw-semibold">{location.locationData.city}, {location.locationData.state}</div>
+                                </>
+                            )}
+                    {location.locationData.description && (
+                    <div className="mb-2">{location.locationData.description}</div>
                     )}
-                    <ul>{location.locations.type_names.map((n) => (
+                    <ul>{location.locationData.type_names.map((n) => (
                         <li key={n[1]} className="small">{n[1]}</li>
                     ))}</ul>
                     

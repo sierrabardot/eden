@@ -12,6 +12,7 @@ export function ActivePanel() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const data = activeComponentData || [];
+    console.log(activeComponentData)
 
     const lastItem = currentPage * itemsPerPage;
     const firstItem = lastItem - itemsPerPage;
@@ -31,9 +32,9 @@ export function ActivePanel() {
                 <div>
                     {activeComponent ? (
                         <div>
-                            {activeComponent === 'Search' && (
+                            {activeComponent === 'Find Nearby Locations' && (
                                 <div className="m-md-4 my-4">
-                                    <h2 className="mb-4">Search</h2>
+                                    <h2 className="mb-4">Find Nearby Locations</h2>
                                     <Link to='/map' className="btn btn-success mb-3">View on Map</Link>
                                     {currentItems.map(location => (
                                         <SearchItem key={location.id} location={location} />
