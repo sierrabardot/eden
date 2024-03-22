@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getAddress } from '../../utilities/locations-service'
+// import { getAddress } from '../../utilities/locations-service'
 import { useSavedLocations } from '../../contexts/SavedLocationsProvider'
 import { useLoading } from '../../contexts/LoadingProvider'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
@@ -7,7 +7,7 @@ import * as userInteractionsService from '../../utilities/user-interactions-serv
 
 export function SearchItem({ location }) {
     const { setSavedLocations, savedLocations } = useSavedLocations()
-    const [address, setAddress] = useState()
+    // const [address, setAddress] = useState()
     const distance = (location.distance * .001).toFixed(2)
     const [isFavourite, setIsFavourite] = useState(false)
     const { loading, setLoading } = useLoading()
@@ -22,6 +22,7 @@ export function SearchItem({ location }) {
             setLoading(false)
             })
         }
+        // Having issue with rate limit when fetching too many addresses. For now, use data directly from database
         // async function fetchAddress(lat, lng) {
         //     const address = await getAddress(lat, lng)
         //     setAddress(address)
@@ -57,7 +58,13 @@ export function SearchItem({ location }) {
                 <div className="w-100">
                     <div className="d-flex justify-content-between">
                         <div className="mx-2">
-                            {/* <div className="mb-2 fw-semibold">{address}</div> */}
+                            {location.locationData.address ? (
+                                <div className="mb-2">{location.locationData.address}</div>
+                            ) : (
+                                <>
+                                    <div className="mb-2 fw-semibold">{location.locationData.city}, {location.locationData.state}</div>
+                                </>
+                            )}
                             {location.locationData.description && (
                             <div className="mb-2">{location.locationData.description}</div>
                             )}

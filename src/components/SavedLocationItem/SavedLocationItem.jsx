@@ -22,9 +22,9 @@ export function SavedLocationItem({ location }) {
     async function handleClickIcon() {
         let updatedLocation
         try {
-                const value = !isFavourite;
-                updatedLocation = await updateFavourite(value, location.locations.api_id, location.id)
-                setIsFavourite(updatedLocation.is_favourite)
+            const value = !isFavourite;
+            updatedLocation = await updateFavourite(value, location.locations.api_id, location.id)
+            setIsFavourite(updatedLocation.is_favourite)
         } catch (error) {
             console.error('Error handling icon click', error)
         } finally {

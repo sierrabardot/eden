@@ -52,6 +52,7 @@ export async function addLocation(apiId) {
             console.log(error);
         }
         const userInteraction = await addLocationToFavourites(data[0]);
+        return userInteraction;
     } catch (error) {
         console.error(error);
     }
