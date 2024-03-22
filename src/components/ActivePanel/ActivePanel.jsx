@@ -1,6 +1,6 @@
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
-import { SavedLocationItem } from "../NavigationComponent/SavedLocationItem/SavedLocationItem";
-import { SearchItem } from "../NavigationComponent/SearchItem/SearchItem";
+import { SavedLocationItem } from "../SavedLocationItem/SavedLocationItem";
+import { SearchItem } from "../SearchItem/SearchItem";
 import { useLoading } from "../../contexts/LoadingProvider";
 import { LoadingSpinner } from "../../components/LoadingSpinner/LoadingSpinner"
 import { Link } from "react-router-dom";

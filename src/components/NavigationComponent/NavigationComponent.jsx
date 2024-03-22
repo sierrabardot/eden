@@ -82,18 +82,23 @@ export function NavigationComponent() {
             <div className="row justify-content-start">
                 {navOptions.map(option => (
                     <div className="col-6" key={option.name}>
+                    {option.path ? (
+                        <div className="card shadow border-0 m-2 link">
+                            <Link className="text-decoration-none" to={option.path}>
+                            <img src={option.img} className="card-img-top" alt={option.name} />
+                            <div className="card-body">
+                                <div className="card-title m-0 text-black">{option.name}</div>
+                            </div>
+                            </Link>
+                        </div>
+                        ) : (
                         <div className="card shadow border-0 m-2 link" onClick={option.action ? option.action : () => handleSetActiveComponent(option.name)}>
                             <img src={option.img} className="card-img-top" alt={option.name} />
-                            {option.path ? (
-                                <Link className="card-body text-decoration-none" to={option.path}>
-                                    <div className="card-title m-0">{option.name}</div>
-                                </Link>
-                            ) : (
                                 <div className="card-body">
-                                    <div className="card-text">{option.name}</div>
+                                    <div className="card-title">{option.name}</div>
                                 </div>
-                            )}
-                        </div>
+                            </div>
+                        )}
                     </div>
                 ))}
             </div>

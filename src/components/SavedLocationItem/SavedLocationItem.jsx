@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { getAddress } from '../../../utilities/locations-service'
+import { getAddress } from '../../utilities/locations-service'
 
 export function SavedLocationItem({ location }) {
     const [address, setAddress] = useState()
