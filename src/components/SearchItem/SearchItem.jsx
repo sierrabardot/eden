@@ -9,7 +9,6 @@ export function SearchItem({ location }) {
     const { setSavedLocations, savedLocations } = useSavedLocations()
     const [address, setAddress] = useState()
     const distance = (location.distance * .001).toFixed(2)
-    const [isWishList, setIsWishList] = useState(false)
     const [isFavourite, setIsFavourite] = useState(false)
     const { loading, setLoading } = useLoading()
 
@@ -18,7 +17,6 @@ export function SearchItem({ location }) {
         function checkIsSaved() {
             savedLocations.forEach((l) => {
                 if (l.locations.api_id === location.id) {
-                    l.is_wishlist && setIsWishList(true)
                     l.is_favourite && setIsFavourite(true)
                 }
             setLoading(false)
@@ -53,10 +51,8 @@ export function SearchItem({ location }) {
         <>
         {!loading ? (
             <div className="d-flex my-2 align-items-center ">
-                <div className="d-flex gap-2">
-                <img className="icon-height link" onClick={() => handleClickIcon('wishlist')} src={`/assets/icons/i_saved_${isWishList ? 'active' : 'inactive'}.png`} alt={isWishList ? 'Saved Active' : 'Saved Inactive'} />
-                
-                <img className="icon-height link" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_heart_${isFavourite ? 'active' : 'inactive'}.png`} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
+                <div className="d-flex m-2">
+                <img className="icon-height link" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_saved_${isFavourite ? 'active' : 'inactive'}.png`} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
                 </div>
                 <div className="w-100">
                     <div className="d-flex justify-content-between">

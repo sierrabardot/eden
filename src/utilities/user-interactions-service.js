@@ -35,25 +35,7 @@ export async function updateFavourite(value, apiId, locationId = null) {
     }
 }
 
-export async function updateWishList(value, apiId, locationId = null) {
-    try {
-        if (!locationId) {
-            const location = await addLocation(apiId);
-            console.log(location);
-        }
-        const { data, error } = await supabase
-            .from('user_interactions')
-            .update({ is_wishlist: value })
-            .eq('id', locationId)
-            .select();
-        return data;
-    } catch (error) {
-        console.error(error);
-        throw new Error('Unable to update wishlist: ', error.message);
-    }
-}
-
-export async function addLocation(apiId, interactionType) {
+export async function addLocation(apiId) {
     const locationData = await getLocationData(apiId);
     try {
         const { data, error } = await supabase
@@ -69,16 +51,13 @@ export async function addLocation(apiId, interactionType) {
         if (error) {
             console.log(error);
         }
-        const userInteraction = await addLocationToUserInteraction(
-            data[0],
-            interactionType
-        );
+        const userInteraction = await addLocationToFavourites(data[0]);
     } catch (error) {
         console.error(error);
     }
 }
 
-async function addLocationToUserInteraction(location, interactionType) {
+async function addLocationToFavourites(location) {
     try {
         const {
             data: { user },
@@ -86,7 +65,7 @@ async function addLocationToUserInteraction(location, interactionType) {
         const interactionData = {
             user_id: user.id,
             location_id: location.id,
-            [`is_${interactionType}`]: true,
+            is_favourite: true,
         };
         const { data, error } = await supabase
             .from('user_interactions')

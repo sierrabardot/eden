@@ -57,7 +57,7 @@ export function NavigationComponent() {
                 location.type_names = await fetchPlantNames(location.type_ids);
             }));
         } else {
-            data = savedLocations.filter(location => location.is_wishlist || location.is_favourite
+            data = savedLocations.filter(location => location.is_favourite
             );
             await Promise.all(data.map(async (location) => {
                 location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
