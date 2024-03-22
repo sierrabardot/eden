@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react';
-import * as locationsService from '../utilities/locations-service';
+import * as userInteractionsService from '../utilities/user-interactions-service';
 import { useLoading } from './LoadingProvider';
 
 const SavedLocationsContext = createContext({});
@@ -11,7 +11,7 @@ export const SavedLocationsProvider = ({ children }) => {
     useEffect(() => {
         const fetchSavedLocations = async () => {
             setLoading(true)
-            const locations = await locationsService.getSavedLocations();
+            const locations = await userInteractionsService.getSavedLocations();
             setSavedLocations(locations);
             setLoading(false)
         };

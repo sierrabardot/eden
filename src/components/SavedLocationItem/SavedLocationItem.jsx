@@ -1,35 +1,65 @@
 import { useEffect, useState } from 'react'
 import { getAddress } from '../../utilities/locations-service'
+import { useLoading } from '../../contexts/LoadingProvider'
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
+import { updateFavourite } from '../../utilities/user-interactions-service'
+import { updateWishList } from '../../utilities/user-interactions-service'
 
 export function SavedLocationItem({ location }) {
+    const { loading, setLoading } = useLoading()
     const [address, setAddress] = useState()
-    console.log(location)
+    const [isWishList, setIsWishList] = useState(location.is_wishlist)
+    const [isFavourite, setIsFavourite] = useState(location.is_favourite)
 
-    useEffect(() => {
-        async function fetchAddress(lat, lng) {
-            const address = await getAddress(lat, lng)
-            setAddress(address)
+    // useEffect(() => {
+    //     setLoading(true)
+    //     async function fetchAddress(lat, lng) {
+    //         const address = await getAddress(lat, lng)
+    //         setAddress(address)
+    //         setLoading(false)
+    //     }
+    //     fetchAddress(location.locations.lat, location.locations.lng)
+    // }, [])
+
+    async function handleClickIcon(interactionType) {
+        try {
+            if (interactionType === 'favourite') {
+                const value = !isFavourite;
+                await updateFavourite(value, location.locations.api_id, location.id)
+                isFavourite ? setIsFavourite(false) : setIsFavourite(true)
+            } else {
+                const value = !isWishList;
+                await updateWishList(value, location.locations.api_id, location.id)
+                isWishList ? setIsWishList(false) : setIsWishList(true)
+            }
+        } catch (error) {
+            console.error('Error handling icon click', error)
+        }
     }
-    fetchAddress(location.locations.lat, location.locations.lng)
-    }, [])
 
     return (
-        <div className="d-flex mt-4 align-items-center ">
-            <div className="d-flex gap-2">
-                <img className="icon-height" src={location.is_favourite ? '/assets/icons/i_saved_active.png' : '/assets/icons/i_saved_inactive.png'} />
-                <img className="icon-height" src={location.is_wishlist ? '/assets/icons/i_heart_active.png' : '/assets/icons/i_heart_inactive.png'} />
+        <>
+        {!loading ? (
+            <div className="d-flex mt-4 align-items-center ">
+                <div className="d-flex gap-2">
+                    <img className="icon-height" onClick={() => handleClickIcon('wishlist')} src={`/assets/icons/i_saved_${isWishList ? 'active' : 'inactive'}.png`} alt={isWishList ? 'Saved Active' : 'Saved Inactive'} />
+                    <img className="icon-height" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_heart_${isFavourite ? 'active' : 'inactive'}.png`} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
+                </div>
+                <div className="w-100 mx-4">
+                    {/* <div className="mb-2 fw-semibold">{address}</div> */}
+                    {location.locations.description && (
+                    <div className="mb-2">{location.locations.description}</div>
+                    )}
+                    <ul>{location.locations.type_names.map((n) => (
+                        <li key={n[1]} className="small">{n[1]}</li>
+                    ))}</ul>
+                    
+                    <div className="linebreak rounded opacity-50 mt-4" ></div>
+                </div>
             </div>
-            <div className="w-100 mx-4">
-                <div className="mb-2 fw-semibold">{address}</div>
-                {location.locations.description && (
-                <div className="mb-2">{location.locations.description}</div>
-                )}
-                <ul>{location.locations.type_names.map((n) => (
-                    <li key={n[1]} className="small">{n[1]}</li>
-                ))}</ul>
-                
-                <div className="linebreak rounded opacity-50 mt-4" ></div>
-            </div>
-        </div>
+        ) : (
+            <LoadingSpinner />
+        )}
+        </>
     )
 }

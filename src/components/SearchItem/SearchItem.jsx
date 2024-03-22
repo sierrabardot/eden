@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react'
 import { getAddress } from '../../utilities/locations-service'
 import { useSavedLocations } from '../../contexts/SavedLocationsProvider'
 import { useLoading } from '../../contexts/LoadingProvider'
+import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
+import { updateFavourite } from '../../utilities/user-interactions-service'
 
 export function SearchItem({ location }) {
     const { savedLocations } = useSavedLocations()
@@ -20,34 +22,47 @@ export function SearchItem({ location }) {
                     l.is_wishlist && setIsWishList(true)
                     l.is_favourite && setIsFavourite(true)
                 }
-            })
             setLoading(false)
+            })
         }
+        // async function fetchAddress(lat, lng) {
+        //     const address = await getAddress(lat, lng)
+        //     setAddress(address)
+        //     setLoading(false)
+        // }
+        // fetchAddress(location.lat, location.lng)
         checkIsSaved()
     }, [])
 
-    useEffect(() => {
-        setLoading(true)
-        async function fetchAddress(lat, lng) {
-            const address = await getAddress(lat, lng)
-            setAddress(address)
-            setLoading(false)
+    async function handleClickIcon(interactionType) {
+        try {
+            if (interactionType === 'favourite') {
+                isFavourite ? setIsFavourite(false) : setIsFavourite(true)
+                const value = isFavourite;
+                await updateFavourite(apiId, value)
+            } else {
+                isWishList ? setIsWishList(false) : setIsWishList(true)
+                const value = isWishList;
+                await updateWishlist(apiId, value)
+            }
+        } catch (error) {
+            console.error('Error handling icon click', error)
+        }
     }
-    fetchAddress(location.lat, location.lng)
-    }, [])
     
     return (
         <>
         {!loading ? (
             <div className="d-flex my-2 align-items-center ">
                 <div className="d-flex gap-2">
-                    <img className="icon-height" src={isWishList ? '/assets/icons/i_saved_active.png' : '/assets/icons/i_saved_inactive.png'} />
-                    <img className="icon-height" src={isFavourite ? '/assets/icons/i_heart_active.png' : '/assets/icons/i_heart_inactive.png'} />
+                <img className="icon-height link" onClick={() => handleClickIcon('wishlist')} src={`/assets/icons/i_saved_${isWishList ? 'active' : 'inactive'}.png`} alt={isWishList ? 'Saved Active' : 'Saved Inactive'} />
+                
+                <img className="icon-height link" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_heart_${isFavourite ? 'active' : 'inactive'}.png`} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
                 </div>
                 <div className="w-100">
                     <div className="d-flex justify-content-between">
                         <div className="mx-2">
-                            <div className="mb-2 fw-semibold">{address}</div>
+                            {/* <div className="mb-2 fw-semibold">{address}</div> */}
                             {location.locationData.description && (
                             <div className="mb-2">{location.locationData.description}</div>
                             )}
