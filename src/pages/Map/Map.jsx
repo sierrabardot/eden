@@ -22,7 +22,7 @@ export function MapPage() {
             </header>
             <div className="col-md-7">
                 <APIProvider apiKey={import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY}>
-                    <div className="container-fluid vh-100">
+                    <div className="container-fluid min-vh">
                         <Map defaultZoom={10} defaultCenter={center} mapId={import.meta.env.VITE_APP_GOOGLE_MAPS_MAP_ID} />
                     </div>
                 </APIProvider>

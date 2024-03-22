@@ -21,13 +21,13 @@ export function Home() {
                         <div className="col-md-5 gradient">
                             <NavigationComponent />
                         </div>
-                        <div className="col-md-7 bg-dark-green min-vh-100 text-white">
+                        <div className="col-md-7 bg-dark-green min-vh text-white">
                             <ActivePanel />
                         </div>
                     </div>
                 </div>
                 ) : (
-                    <div className="d-flex text-white bg-dark-green align-items-center flex-column" >
+                    <div className="d-flex text-white bg-dark-green min-vh align-items-center flex-column" >
                         <LoadingSpinner className="mt-4" />
                         <p>Please allow location services to continue.</p>
                     </div>

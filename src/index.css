@@ -18,6 +18,14 @@ a:hover,
     cursor: pointer;
 }
 
+.min-vh {
+    min-height: calc(100vh - 76px);
+}
+
+.text-red {
+    color: var(--red);
+}
+
 .bg-green {
     background-color: var(--forest-green);
 }
@@ -31,13 +39,13 @@ a:hover,
 }
 
 .bg-image {
-    background-image: url('/public/assets/landing-page-bg.png');
+    background-image: url('/assets/landing-page-bg.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
 
 .bg-rhs {
-    background-image: url('/public/assets/other/bg-2.png');
+    background-image: url('/assets/other/bg-2.png');
     background-repeat: no-repeat;
     background-size: cover;
 }
