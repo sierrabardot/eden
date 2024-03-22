@@ -46,7 +46,7 @@ export async function getPlantNames(ids) {
 
 export async function getNearbyLocations(userLocation, range = 10) {
     const [minLat, maxLat, minLng, maxLng] = findBounds(userLocation, range);
-    const url = `${BASE_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=10&offset=0&api_key=${API_KEY}`;
+    const url = `${BASE_URL}/locations?bounds=${minLat},${minLng}|${maxLat},${maxLng}&center=${userLocation.lat},${userLocation.lng}&limit=100&offset=0&api_key=${API_KEY}`;
 
     try {
         const response = await fetch(url);

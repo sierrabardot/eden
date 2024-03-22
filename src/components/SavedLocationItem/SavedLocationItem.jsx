@@ -13,15 +13,15 @@ export function SavedLocationItem({ location }) {
     const [isFavourite, setIsFavourite] = useState(location.is_favourite)
     const { savedLocations, setSavedLocations } = useSavedLocations()
     
-    useEffect(() => {
-        setLoading(true)
-        async function fetchAddress(lat, lng) {
-            const address = await getAddress(lat, lng)
-            setAddress(address)
-            setLoading(false)
-        }
-        fetchAddress(location.locations.lat, location.locations.lng)
-    }, [])
+    // useEffect(() => {
+    //     setLoading(true)
+    //     async function fetchAddress(lat, lng) {
+    //         const address = await getAddress(lat, lng)
+    //         setAddress(address)
+    //         setLoading(false)
+    //     }
+    //     fetchAddress(location.locations.lat, location.locations.lng)
+    // }, [])
 
     async function handleClickIcon(interactionType) {
         setLoading(true)
@@ -57,7 +57,7 @@ export function SavedLocationItem({ location }) {
                     <img className="icon-height" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_heart_${isFavourite ? 'active' : 'inactive'}.png`} disabled={loading} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
                 </div>
                 <div className="w-100 mx-4">
-                    <div className="mb-2 fw-semibold">{address}</div>
+                    {/* <div className="mb-2 fw-semibold">{address}</div> */}
                     {location.locations.description && (
                     <div className="mb-2">{location.locations.description}</div>
                     )}

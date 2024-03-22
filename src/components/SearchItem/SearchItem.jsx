@@ -4,7 +4,6 @@ import { useSavedLocations } from '../../contexts/SavedLocationsProvider'
 import { useLoading } from '../../contexts/LoadingProvider'
 import { LoadingSpinner } from '../LoadingSpinner/LoadingSpinner'
 import * as userInteractionsService from '../../utilities/user-interactions-service'
-import { updateWishList } from '../../utilities/user-interactions-service'
 
 export function SearchItem({ location }) {
     const { setSavedLocations, savedLocations } = useSavedLocations()
@@ -25,12 +24,12 @@ export function SearchItem({ location }) {
             setLoading(false)
             })
         }
-        async function fetchAddress(lat, lng) {
-            const address = await getAddress(lat, lng)
-            setAddress(address)
-            setLoading(false)
-        }
-        fetchAddress(location.lat, location.lng)
+        // async function fetchAddress(lat, lng) {
+        //     const address = await getAddress(lat, lng)
+        //     setAddress(address)
+        //     setLoading(false)
+        // }
+        // fetchAddress(location.lat, location.lng)
         checkIsSaved()
     }, [])
 
@@ -62,7 +61,7 @@ export function SearchItem({ location }) {
                 <div className="w-100">
                     <div className="d-flex justify-content-between">
                         <div className="mx-2">
-                            <div className="mb-2 fw-semibold">{address}</div>
+                            {/* <div className="mb-2 fw-semibold">{address}</div> */}
                             {location.locationData.description && (
                             <div className="mb-2">{location.locationData.description}</div>
                             )}
