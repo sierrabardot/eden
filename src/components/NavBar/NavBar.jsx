@@ -11,12 +11,12 @@ export function NavBar() {
                     <img src="/assets/logo_white.png" className='logo-dashboard' alt="Eden Logo"/>
                 </NavLink>
                 <div className='flex-row d-flex'>
+                    <div className='text-white'>Welcome, {user.user_metadata.username}</div>
                     <NavLink to='/' className="text-decoration-none">
-                        <div className='text-white fw-semibold'>
+                        <div className='text-white mx-5 fw-semibold'>
                             Dashboard
                         </div>
                     </NavLink>
-                    <div className='text-white mx-5'>Welcome, {user.user_metadata.username}</div>
                 </div>
             </div>
         </nav>

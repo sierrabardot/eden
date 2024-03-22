@@ -18,16 +18,16 @@ export function Home() {
                 {userLocation ? (
                 <div className="container-fluid">
                     <div className="row">
-                        <div className="col-md-5 gradient min-vh-100">
+                        <div className="col-md-5 gradient">
                             <NavigationComponent />
                         </div>
-                        <div className="col-md-7 min-vh-100 bg-dark-green text-white">
+                        <div className="col-md-7 bg-dark-green min-vh-100 text-white">
                             <ActivePanel />
                         </div>
                     </div>
                 </div>
                 ) : (
-                    <div className="d-flex text-white bg-dark-green vh-100 align-items-center flex-column" >
+                    <div className="d-flex text-white bg-dark-green align-items-center flex-column" >
                         <LoadingSpinner className="mt-4" />
                         <p>Please allow location services to continue.</p>
                     </div>

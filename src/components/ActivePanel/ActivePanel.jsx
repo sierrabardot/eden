@@ -1,5 +1,4 @@
 import { useActiveComp } from "../../contexts/ActiveCompProvider";
-import { AdventureLogItem } from "../NavigationComponent/AdventureLogItem/AdventureLogItem";
 import { SavedLocationItem } from "../NavigationComponent/SavedLocationItem/SavedLocationItem";
 import { SearchItem } from "../NavigationComponent/SearchItem/SearchItem";
 import { useLoading } from "../../contexts/LoadingProvider";
@@ -20,16 +19,8 @@ export function ActivePanel() {
                 <div>
                     {activeComponent ? (
                         <div>
-                            {activeComponent === 'Adventure Log' && (
-                                <div className="m-5">
-                                    <h2 className="mb-4">Adventure Log</h2>
-                                    {activeComponentData.map(location => (
-                                        <AdventureLogItem key={location.id} record={location} />
-                                    ))}
-                                </div>
-                            )}
                             {activeComponent === 'Search' && (
-                                <div className="m-5">
+                                <div className="m-md-4 mt-4">
                                     <h2 className="mb-4">Search</h2>
                                     <Link to='/map' className="btn btn-success mb-3">View on Map</Link>
                                     {activeComponentData.map(location => (
@@ -38,7 +29,7 @@ export function ActivePanel() {
                                 </div>
                             )}
                             {activeComponent === 'Saved Locations' && (
-                                <div className="m-5">
+                                <div className="m-md-4 mt-4">
                                     <h2 className="mb-4">Saved Locations</h2>
                                     <Link to='/map' className="btn btn-success mb-3">View on Map</Link>
                                     {activeComponentData.map(location => (

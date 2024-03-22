@@ -7,7 +7,6 @@ export async function getAddress(lat, lng) {
     const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${
         import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY
     }`;
-    console.log(url);
     try {
         const response = await fetch(url);
         const data = await response.json();
@@ -31,16 +30,6 @@ export async function getSavedLocations() {
     } catch (error) {
         console.error('Error fetching user interactions:', error.message);
         throw new Error(error.message);
-    }
-}
-
-export async function getVisitRecords() {
-    try {
-        const {
-            data: { user },
-        } = await db.auth.getUser();
-        const { data: userInteractions, error } = await db
-        .from()
     }
 }
 

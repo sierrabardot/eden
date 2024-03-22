@@ -25,7 +25,7 @@ export function SavedLocationItem({ location }) {
                 <div className="mb-2">{location.locations.description}</div>
                 )}
                 <ul>{location.locations.type_names.map((n) => (
-                    <li className="small">{n[1]}</li>
+                    <li key={n[1]} className="small">{n[1]}</li>
                 ))}</ul>
                 
                 <div className="linebreak rounded opacity-50 mt-4" ></div>

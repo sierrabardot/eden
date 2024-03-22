@@ -8,7 +8,7 @@ export function AuthPage() {
     const location = useLocation();
 
     return (
-        <div className='container-fluid vh-100'>
+        <div className='container-fluid'>
             <div className="row d-flex">
                 <div className="col-md-7 d-flex justify-content-center align-items-center bg-image vh-100 position-relative">
                 <img src="/assets/logo_white.png" className='logo-dashboard position-absolute top-0 start-0 p-3' alt="" />

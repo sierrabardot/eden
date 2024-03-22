@@ -22,7 +22,7 @@ export function SearchItem({ location }) {
             </div> */}
             <div className="w-100">
                 <div className="d-flex justify-content-between">
-                    <div className="mx-4 col-9">
+                    <div className="mx-2">
                         <div className="mb-2 fw-semibold">{address}</div>
                         {location.locationData.description && (
                         <div className="mb-2">{location.locationData.description}</div>
@@ -32,7 +32,6 @@ export function SearchItem({ location }) {
                         ))}</ul>
                         <div>{distance}km away</div>
                     </div>
-                        <div className="btn btn-primary col-2 align-self-end">Add Visit</div>
                 </div>
                 <div className="linebreak rounded opacity-50 mt-4"></div>
             </div>

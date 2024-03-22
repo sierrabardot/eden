@@ -25,21 +25,13 @@ export function NavigationComponent() {
             img: '/assets/card-backgrounds/card_saved.png'
         },
         {
-            name: 'Adventure Log',
-            img: '/assets/card-backgrounds/card_history.png'
-        },
-        {
             name: 'Search',
             img: '/assets/card-backgrounds/card_search.png'
         },
         {
-            name: 'Settings',
-            img: '/assets/card-backgrounds/card_add.png'
-        },
-        {
             name: 'Log Out',
             action: handleLogOut,
-            img: '/assets/card-backgrounds/card_logout.png'
+            img: '/assets/card-backgrounds/card_add.png'
         }
     ];
 
@@ -64,20 +56,13 @@ export function NavigationComponent() {
             await Promise.all(data.map(async (location) => {
                 location.type_names = await fetchPlantNames(location.type_ids);
             }));
-        } else if (navOption === 'Saved Locations') {
+        } else {
             data = savedLocations.filter(location => location.is_wishlist || location.is_favourite
             );
             await Promise.all(data.map(async (location) => {
                 location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
             }));
-        } else {
-            data = savedLocations.filter(location => location.has_visited)
-
-            await Promise.all(data.map(async (location) => {
-                location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
-            }));
         }
-
         setData(navOption, data);
         setLoading(false);
     }
