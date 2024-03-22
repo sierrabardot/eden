@@ -1,6 +1,6 @@
 export function LandingPageInfo() {
     return (
-        <div className="container-fluid bg-blue bg-rhs vh-100 d-flex flex-column justify-content-center align-items-center">
+        <div className="container-fluid bg-rhs vh-100 d-flex flex-column justify-content-center align-items-center">
             <img src="/assets/other/hero_logo.png" className="eden-logo my-4" alt="Eden Logo" />
             <p className="text-white mb-5 col-md-6 col-11 small text-center ">Welcome to Eden, where nature lovers, foragers, and those with a penchant for exploration unite!<br></br>
             Embark on a journey through our collaborative foraging map, where nature's wonders await for you.
@@ -33,7 +33,7 @@ const options = [
     },
     {
         id: 3,
-        icon: '/assets/icons/i_marker.png',
+        icon: '/assets/icons/i_marker_white.png',
         text: 'Find nature without ever leaving the suburbs',
     },
 

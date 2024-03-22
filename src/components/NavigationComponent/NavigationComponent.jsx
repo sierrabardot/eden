@@ -15,12 +15,32 @@ export function NavigationComponent() {
     const { setLoading } = useLoading()
 
     const navOptions = [
-        { name: 'Explore', path: '/map' },
-        { name: 'Saved Locations' },
-        { name: 'Adventure Log' },
-        { name: 'Search' },
-        { name: 'Settings' },
-        { name: 'Log Out', action: handleLogOut }
+        {
+            name: 'Explore',
+            path: '/map',
+            img: '/assets/card-backgrounds/card_explore.png'
+        },
+        {
+            name: 'Saved Locations',
+            img: '/assets/card-backgrounds/card_saved.png'
+        },
+        {
+            name: 'Adventure Log',
+            img: '/assets/card-backgrounds/card_history.png'
+        },
+        {
+            name: 'Search',
+            img: '/assets/card-backgrounds/card_search.png'
+        },
+        {
+            name: 'Settings',
+            img: '/assets/card-backgrounds/card_add.png'
+        },
+        {
+            name: 'Log Out',
+            action: handleLogOut,
+            img: '/assets/card-backgrounds/card_logout.png'
+        }
     ];
 
     function handleLogOut() {
@@ -44,14 +64,15 @@ export function NavigationComponent() {
             await Promise.all(data.map(async (location) => {
                 location.type_names = await fetchPlantNames(location.type_ids);
             }));
+        } else if (navOption === 'Saved Locations') {
+            data = savedLocations.filter(location => location.is_wishlist || location.is_favourite
+            );
+            await Promise.all(data.map(async (location) => {
+                location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
+            }));
         } else {
-            data = savedLocations.filter(location => {
-                if (navOption === 'Adventure Log') {
-                    return location.has_visited;
-                } else {
-                    return location.is_wishlist || location.is_favourite;
-                }
-            });
+            data = savedLocations.filter(location => location.has_visited)
+
             await Promise.all(data.map(async (location) => {
                 location.locations.type_names = await fetchPlantNames(location.locations.type_ids);
             }));
@@ -75,15 +96,16 @@ export function NavigationComponent() {
         <div className="container-fluid text-center py-4">
             <div className="row justify-content-start">
                 {navOptions.map(option => (
-                    <div className="col-md-6" key={option.name}>
-                        <div className="card m-2 link" onClick={option.action ? option.action : () => handleSetActiveComponent(option.name)}>
+                    <div className="col-6" key={option.name}>
+                        <div className="card shadow border-0 m-2 link" onClick={option.action ? option.action : () => handleSetActiveComponent(option.name)}>
+                            <img src={option.img} className="card-img-top" alt={option.name} />
                             {option.path ? (
                                 <Link className="card-body text-decoration-none" to={option.path}>
-                                    <div className="card-title">{option.name}</div>
+                                    <div className="card-title m-0">{option.name}</div>
                                 </Link>
                             ) : (
                                 <div className="card-body">
-                                    <div className="card-title">{option.name}</div>
+                                    <div className="card-text">{option.name}</div>
                                 </div>
                             )}
                         </div>

@@ -3,12 +3,12 @@ import { useAuth } from '../../contexts/AuthProvider';
 
 export function NavBar() {
     const {user} = useAuth()
-    
+
     return (
-        <nav className='navbar bg-opacity-10 bg-green'>
+        <nav className='navbar bg-opacity-10 bg-light-green'>
             <div className='container-fluid d-flex flex-row justify-content-between'>
                 <NavLink to='/'>
-                    <img src="/assets/logo_white.png" className='logo-white' alt="Eden Logo"/>
+                    <img src="/assets/logo_white.png" className='logo-dashboard' alt="Eden Logo"/>
                 </NavLink>
                 <div className='flex-row d-flex'>
                     <NavLink to='/' className="text-decoration-none">

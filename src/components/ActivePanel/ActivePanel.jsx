@@ -11,31 +11,36 @@ export function ActivePanel() {
     const { loading } = useLoading()
     
     return (
-        <div className="d-flex flex-column justify-content-center align-items-center">
+        <div>
             {loading ? (
-                <LoadingSpinner />
+                <div className="d-flex align-items-center justify-content-center">
+                    <LoadingSpinner />
+                </div>
             ) : (
                 <div>
                     {activeComponent ? (
                         <div>
                             {activeComponent === 'Adventure Log' && (
-                                <div>
+                                <div className="m-5">
+                                    <h2 className="mb-4">Adventure Log</h2>
                                     {activeComponentData.map(location => (
                                         <AdventureLogItem key={location.id} record={location} />
                                     ))}
                                 </div>
                             )}
                             {activeComponent === 'Search' && (
-                                <div>
-                                    <Link to='/map' className="btn btn-primary">View on Map</Link>
+                                <div className="m-5">
+                                    <h2 className="mb-4">Search</h2>
+                                    <Link to='/map' className="btn btn-success mb-3">View on Map</Link>
                                     {activeComponentData.map(location => (
                                         <SearchItem key={location.id} location={location} />
                                     ))}
                                 </div>
                             )}
                             {activeComponent === 'Saved Locations' && (
-                                <div>
-                                    <Link to='/map' className="btn btn-primary">View on Map</Link>
+                                <div className="m-5">
+                                    <h2 className="mb-4">Saved Locations</h2>
+                                    <Link to='/map' className="btn btn-success mb-3">View on Map</Link>
                                     {activeComponentData.map(location => (
                                         <SavedLocationItem key={location.id} location={location} />
                                     ))}

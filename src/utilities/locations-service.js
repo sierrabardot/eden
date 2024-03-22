@@ -3,6 +3,21 @@ import db from '../config/dbClient';
 const BASE_URL = 'https://fallingfruit.org/api/0.3';
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
+export async function getAddress(lat, lng) {
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${lat},${lng}&key=${
+        import.meta.env.VITE_APP_GOOGLE_MAPS_API_KEY
+    }`;
+    console.log(url);
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.results[0].formatted_address;
+    } catch (error) {
+        console.error(error);
+        throw new Error('Unable to fetch address.');
+    }
+}
+
 export async function getSavedLocations() {
     try {
         const {
@@ -16,6 +31,16 @@ export async function getSavedLocations() {
     } catch (error) {
         console.error('Error fetching user interactions:', error.message);
         throw new Error(error.message);
+    }
+}
+
+export async function getVisitRecords() {
+    try {
+        const {
+            data: { user },
+        } = await db.auth.getUser();
+        const { data: userInteractions, error } = await db
+        .from()
     }
 }
 

@@ -1,7 +1,7 @@
 :root {
     --dark-green: #00380d;
     --forest-green: #0c5629;
-    --light-green: #a8d5ae;
+    --light-green: #177445;
     --sky-blue: #079dd8;
     --light-blue: #addaec;
     --red: #ec5b60;
@@ -21,12 +21,12 @@ a:hover,
     background-color: var(--forest-green);
 }
 
-.bg-dark-green {
-    background-color: var(--dark-green);
+.bg-light-green {
+    background-color: var(--light-green);
 }
 
-.bg-blue {
-    background-color: var(--sky-blue);
+.bg-dark-green {
+    background-color: var(--dark-green);
 }
 
 .bg-image {
@@ -50,7 +50,7 @@ a:hover,
 }
 
 .logo-dashboard {
-    width: 100px;
+    height: 60px;
 }
 
 .circle {
@@ -58,7 +58,7 @@ a:hover,
 }
 
 .icon-height {
-    height: 30px;
+    height: 25px;
 }
 
 .eden-logo {
@@ -67,4 +67,14 @@ a:hover,
 
 .spacer {
     height: 200px;
+}
+
+.gradient {
+    background: var(--sky-blue);
+    background: linear-gradient(var(--sky-blue), var(--light-blue));
+}
+
+.linebreak {
+    height: 2px;
+    background-color: var(--light-blue);
 }
