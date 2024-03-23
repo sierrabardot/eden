@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
-import { APIProvider, Map, Marker } from "@vis.gl/react-google-maps"
-import { MarkerComponent } from "../../components/MarkerComponent/MarkerComponent";
+import { APIProvider, AdvancedMarker, Map, Marker } from "@vis.gl/react-google-maps"
 import { useUserLocation } from "../../contexts/UserLocationProvider";
 // import { useActiveComp, ActiveCompProvider } from "../../contexts/ActiveCompProvider"
 import { NavBar } from "../../components/NavBar/NavBar";
@@ -9,7 +8,7 @@ import { getNearbyLocations } from "../../utilities/locations-service";
 export function MapPage() {
     const { userLocation } = useUserLocation()
     const [error, setError] = useState(null)
-    const [isOpen, setIsOpen] = useState(false)
+    const [open, setOpen] = useState(false)
     const [locations, setLocations] = useState([])
     useEffect(() => {
         const getLocations = async (userLocation) => {
@@ -38,7 +37,7 @@ export function MapPage() {
                     <div className="container-fluid vh-100">
                         <Map defaultZoom={10} defaultCenter={center} mapId={import.meta.env.VITE_APP_GOOGLE_MAPS_MAP_ID}>
                             {locations.map((l) => (
-                                <Marker position={{ lat: l.lat, lng: l.lng }} />
+                                <AdvancedMarker position={{ lat: l.lat, lng: l.lng }} />
                             ))}
                         </Map>
                     </div>

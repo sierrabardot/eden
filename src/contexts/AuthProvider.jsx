@@ -11,6 +11,7 @@ export const AuthProvider = ({ children }) => {
             const user = await usersService.getUser();
             setUser(user);
         };
+        console.log('auth provider: ', user)
         fetchUser();
     }, []);
 

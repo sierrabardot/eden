@@ -8,19 +8,19 @@ import { useActiveComp } from '../../contexts/ActiveCompProvider'
 
 export function SavedLocationItem({ location }) {
     const { loading, setLoading } = useLoading()
-    // const [address, setAddress] = useState()
+    const [address, setAddress] = useState()
     const [isFavourite, setIsFavourite] = useState(location.is_favourite)
     const { savedLocations, setSavedLocations } = useSavedLocations()
     const { setData } = useActiveComp()
     console.log(location)
     
-    // useEffect(() => {
-    //     async function fetchAddress(lat, lng) {
-    //         const address = await getAddress(lat, lng)
-    //         setAddress(address)
-    //     }
-    //     fetchAddress(location.locations.lat, location.locations.lng)
-    // }, [])
+    useEffect(() => {
+        async function fetchAddress(lat, lng) {
+            const address = await getAddress(lat, lng)
+            setAddress(address)
+        }
+        fetchAddress(location.locationData.lat, location.locationData.lng)
+    }, [])
 
     async function handleClickIcon() {
         let updatedFavourite
@@ -48,13 +48,14 @@ export function SavedLocationItem({ location }) {
                     <img className="icon-height link" onClick={() => handleClickIcon('favourite')} src={`/assets/icons/i_saved_${isFavourite ? 'active' : 'inactive'}.png`} disabled={loading} alt={isFavourite ? 'Saved Active' : 'Saved Inactive'} />
                 </div>
                 <div className="w-100 mx-4">
-                            {location.locationData.address ? (
-                                <div className="mb-2">{location.locationData.address}</div>
-                            ) : (
-                                <>
-                                    <div className="mb-2 fw-semibold">{location.locationData.city}, {location.locationData.state}</div>
-                                </>
-                            )}
+                    <div className="mb-2 fw-semibold">{address}</div>
+                    {/* {location.locationData.address ? (
+                        <div className="mb-2">{location.locationData.address}</div>
+                    ) : (
+                        <>
+                            <div className="mb-2 fw-semibold">{location.locationData.city}, {location.locationData.state}</div>
+                        </>
+                    )} */}
                     {location.locationData.description && (
                     <div className="mb-2">{location.locationData.description}</div>
                     )}
