@@ -35,8 +35,8 @@ export function SavedLocationItem({ location }) {
                 setSavedLocations(savedLocations.map((location) => {
                     return location.id === updatedFavourite.id ? updatedFavourite : location
                 }))
+                setData('Saved Locations', savedLocations)
             }
-            setData('Saved Locations', savedLocations)
         }
     }
 
